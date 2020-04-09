@@ -1,4 +1,3 @@
-<?php session_start();?>
 <?php include_once('lib/header.php');?>
     <h1>Login</h1>
     <p>
