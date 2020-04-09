@@ -64,3 +64,7 @@ Procedural
 - save their data in the db
 ** firstname + lastname + id
 - use a unique identity for them
+
+---- Login
+* email
+* Password

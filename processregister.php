@@ -23,7 +23,7 @@ $_SESSION["department"] = $department;
 if($errorCount > 0){
     //Display proper error messages to the user
     //
-    $_SESSION['error'] = "You have ".$errorCount . " errors in your form submission";
+    $_SESSION['error'] = "You have ".$errorCount . " error".(($errorCount >1) ? "s" : "")." in your form submission";
     header("Location: register.php");
 }else{
     //Count all users
@@ -39,7 +39,7 @@ if($errorCount > 0){
         "first_name" => $first_name,
         "last_name"=> $last_name,
         "email" => $email,
-        "password" => $password,
+        "password" => password_hash($password,PASSWORD_DEFAULT),
         "gender" => $gender,
         "designation" => $designation,
         "department" => $department
@@ -48,7 +48,7 @@ if($errorCount > 0){
     //Check if the user already exist
     for($counter=0; $counter < count($allUsers); $counter++){
         $currentUser = $allUsers[$counter];
-        if($currentUser = $email . ".json"){
+        if($currentUser == $email . ".json"){
             $_SESSION["error"] = "Registration failed, User already exists";
             header("Location: register.php");
             die(); 
@@ -65,9 +65,5 @@ if($errorCount > 0){
     header("Location: login.php");
 }// if error count > 0
 
-//Verifying the data, validation
 
-//saving the data into the database (folder)
-
-//return back to the page, with a status message
 ?>
