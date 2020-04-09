@@ -1,0 +1,65 @@
+localhost/p/start.ng/SNH 
+- Register
+
+We need:
+- First name (string)
+- Last name (string)
+- Designation (what role they have in the hospital)) - (string)
+- email -(string)
+- ID (auto generated) (Integer)
+- Department (string)
+- Gender
+- Password (string)
+
+++ 3 levels
+** Medical team 
+** Super Admin (Md)
+** Patients
+
+Access Control Level
+***************
+
+- Login
+- Logout
+- Reset Password
+- Log Activities / Server -Issues
+- Dashboard
+*** you are logged in as (role), name and office
+
+
+
+- Push to Github
+- Host It.
+********************
+
+FileSystem.
+
+
+************
+
+Variables
+Data types
+array 
+operations
+loops
+conditionals
+Functions 
+
+****************
+- Hospital - SNH (start.ng Hospital)
+
+OOP - Object Oriented Programming
+
+Procedural
+
+** Images
+** Javascript
+** Html 
+** CSS
+
+***************
+
+- generate Id (UUID) for them
+- save their data in the db
+** firstname + lastname + id
+- use a unique identity for them
