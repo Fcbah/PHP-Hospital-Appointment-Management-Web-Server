@@ -3,6 +3,9 @@
     <h1>Login</h1>
     <p>
         <?php
+        if (isset($_SESSION["loggedIn"]) && !empty($_SESSION["loggedIn"])){
+            header("Location: dashboard.php");
+        }
             if(isset($_SESSION["message"]) && !empty($_SESSION["message"])){
                 echo "<span style='color:green'>". $_SESSION['message']."</span>";
                 //session_unset();
