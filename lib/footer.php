@@ -8,7 +8,9 @@
         <?php }else{?>
                     
             <a href="logout.php">Logout</a> |
-            <?php if($_SESSION["role"]  =="Super Admin"){?>
+            <?php
+            //Ensures that Super Admin can add users
+            if($_SESSION["role"]  =="Super Admin"){?>
             <a href="register.php">Register</a>|
         <?php }}?>
         <?php

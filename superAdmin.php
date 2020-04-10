@@ -7,7 +7,6 @@ if(!isset($_SESSION["role"]) || !($_SESSION["role"] == "Super Admin")){
 ?>
 <?php
 if(!isset($_SESSION["loggedIn"]) || empty($_SESSION["loggedIn"])){
-    //redirect to our dashboard
     header("Location: login.php");
 }
 ?>
