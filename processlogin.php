@@ -29,6 +29,8 @@ for($counter=0; $counter < count($allUsers); $counter++){
         
         if(password_verify($password,$pass4rmdb)){
             $_SESSION['loggedIn'] = $userObject->id;
+            $_SESSION["fullName"] = $userObject->first_name. " " . $userObject->last_name; 
+            $_SESSION["role"] = $userObject->designation;
             header("Location: dashboard.php");
             die();
         }
