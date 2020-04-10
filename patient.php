@@ -10,7 +10,7 @@ if(!isset($_SESSION["loggedIn"]) || empty($_SESSION["loggedIn"])){
     <p> Come as you are it is completely free!</p>
 <h1>Dashboard</h1>
 <p>
-Welcome, <?php echo $_SESSION["fullName"]?> you are logged in 
+<p>Welcome, <?php echo $_SESSION["fullName"]?> you are logged in</p> 
 <p> Your designation and Access Level is <?php echo $_SESSION["role"]?></p>
 </p>
 <p>

@@ -15,7 +15,7 @@ if(!isset($_SESSION["loggedIn"]) || empty($_SESSION["loggedIn"])){
     <br/> <hr/> 
     <p>This is a specialist hospital to cure ignorance</p>
     <p> Come as you are it is completely free!</p>
-<h1>Dashboard</h1>
+<h1>Dashboard</h1><br/>
 <p>Welcome, <?php echo $_SESSION["fullName"]?> you are logged in</p> 
 <p> Your designation and Access Level is <?php echo $_SESSION["role"]?></p>
 <p>
