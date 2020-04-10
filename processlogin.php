@@ -22,6 +22,8 @@ if(strtolower($email)  == strtolower("Admin@here.com")){
     require("lib/AdminPassword.php");
     if(password_verify($password,$Admin_Password)){
         $_SESSION["Mode"] = "SuperAdmin";
+        $_SESSION["loggedIn"] = "ADMIN";
+        $_SESSION["role"] = "SuperAdin";
         header("Location: superAdmin.php");
         die();                   
     }     
@@ -38,11 +40,18 @@ for($counter=0; $counter < count($allUsers); $counter++){
             $_SESSION['loggedIn'] = $userObject->id;
             $_SESSION["fullName"] = $userObject->first_name. " " . $userObject->last_name; 
             $designat = $_SESSION["role"] = $userObject->designation;
-            if($desginat == "Patient"){
+            $userObject->{"last_login"} = explode(" ",date("Y m d h i s A"));
+            $_SESSION["reg_date_time"] = $userObject->reg_date_time;
+            $_SESSION["last_login"] = $userObject->last_login;
+            $_SESSION["department"] = $userObject->department;
+            
+            if($designat == "Patients"){
                 header("Location: patient.php");
+                file_put_contents("db/users/" . $email . ".json",json_encode($userObject));
             }
             else if($designat == "Medical Team (MT)"){
                 header("Location: medical.php");
+                file_put_contents("db/users/" . $email . ".json",json_encode($userObject));
             }else{
                 session_unset();
                 $_SESSION["error"] = "Invalid user, with invalid designation";

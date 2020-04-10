@@ -3,6 +3,15 @@ if(!isset($_SESSION["loggedIn"]) || empty($_SESSION["loggedIn"])){
     //redirect to our dashboard
     header("Location: login.php");
 }
+$designat = $_SESSION["role"];
+if($designat == "Patients"){
+    header("Location: patient.php");
+}
+else if($designat == "Medical Team (MT)"){
+    header("Location: medical.php");
+}else{
+    header("Location: superAdmin.php");
+}
 ?>
 <h1>Dashboard</h1>
 <p>

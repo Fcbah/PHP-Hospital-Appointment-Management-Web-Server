@@ -42,7 +42,8 @@ if($errorCount > 0){
         "password" => password_hash($password,PASSWORD_DEFAULT),
         "gender" => $gender,
         "designation" => $designation,
-        "department" => $department
+        "department" => $department,
+        "reg_date_time" => explode(" ",date("Y m d h i s A"))
     ];
     
 
