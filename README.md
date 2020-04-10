@@ -1,7 +1,10 @@
 # PHP TASK 2 - Build Authentication System
 
 ## Project Information
-This is a project that implements an Registration, Authentication and Login system with 3 different Access level. Logging date and time of server visit on the server... in partial fulfilment of promotion requirement for stage 2 start.ng internship program 2020 
+This is a project that implements an Registration, Authentication and Login system with 3 different Access level. Logging date and time of server visit on the server... in partial fulfilment of promotion requirement for stage 2 start.ng internship program 2020
+
+## Admin Password
+To login as Super Admin the Email to use is `Admin@here.com`. The default password is `Admin`. You can change the password [here](lib/AdminPassword.php)
 
 ## Installation and Server Setup
 + You can just clone this repository into any **empty folder** ( or create a new folder) in your servers `htdocs` directory (The default direcotry for http://localhost/) of your Server. Or if you wish you can use any directory you want by setting up an **alias** in your servers configuration file to the directory.

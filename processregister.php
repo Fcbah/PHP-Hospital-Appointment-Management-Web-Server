@@ -44,6 +44,7 @@ if($errorCount > 0){
         "designation" => $designation,
         "department" => $department
     ];
+    
 
     //Check if the user already exist
     for($counter=0; $counter < count($allUsers); $counter++){

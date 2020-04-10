@@ -17,8 +17,15 @@ if($errorCount > 0){
     echo "No errors";
 }
 
-//Count all users
 $allUsers = scandir("db/users/");
+if(strtolower($email)  == strtolower("Admin@here.com")){
+    require("lib/AdminPassword.php");
+    if(password_verify($password,$Admin_Password)){
+        $_SESSION["Mode"] = "SuperAdmin";
+        header("Location: superAdmin.php");
+        die();                   
+    }     
+}
 
 for($counter=0; $counter < count($allUsers); $counter++){
     $currentUser = $allUsers[$counter];
@@ -30,8 +37,17 @@ for($counter=0; $counter < count($allUsers); $counter++){
         if(password_verify($password,$pass4rmdb)){
             $_SESSION['loggedIn'] = $userObject->id;
             $_SESSION["fullName"] = $userObject->first_name. " " . $userObject->last_name; 
-            $_SESSION["role"] = $userObject->designation;
-            header("Location: dashboard.php");
+            $designat = $_SESSION["role"] = $userObject->designation;
+            if($desginat == "Patient"){
+                header("Location: patient.php");
+            }
+            else if($designat == "Medical Team (MT)"){
+                header("Location: medical.php");
+            }else{
+                session_unset();
+                $_SESSION["error"] = "Invalid user, with invalid designation";
+                header("Location: register.php");
+            }
             die();
         }
         else{
