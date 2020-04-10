@@ -18,20 +18,19 @@ if($errorCount > 0){
 }
 
 $allUsers = scandir("db/users/");
-if(strtolower($email)  == strtolower("Admin@here.com")){
-    require("lib/AdminPassword.php");
-    if(password_verify($password,$Admin_Password)){
-        $_SESSION["Mode"] = "SuperAdmin";
-        $_SESSION["loggedIn"] = "ADMIN";
-        $_SESSION["role"] = "SuperAdin";
-        header("Location: superAdmin.php");
-        die();                   
-    }     
-}
+// if(strtolower($email)  == strtolower("Admin@here.com")){
+//     require("lib/AdminPassword.php");
+//     if(password_verify($password,$Admin_Password)){
+//         $_SESSION["Mode"] = "Super Admin";
+//         $_SESSION["loggedIn"] = -1;
+//         $_SESSION["role"] = "Super Admin";
+//         header("Location: superAdmin.php");
+//         die();                   
+//}
 
 for($counter=0; $counter < count($allUsers); $counter++){
     $currentUser = $allUsers[$counter];
-    if($currentUser == $email . ".json"){
+    if(strtolower($currentUser) == strtolower($email . ".json")){
         $userString = file_get_contents("db/users/".$currentUser );
         $userObject = json_decode($userString);
         $pass4rmdb = $userObject->password;
@@ -47,11 +46,14 @@ for($counter=0; $counter < count($allUsers); $counter++){
             
             if($designat == "Patients"){
                 header("Location: patient.php");
-                file_put_contents("db/users/" . $email . ".json",json_encode($userObject));
+                file_put_contents("db/users/" . $currentUser,json_encode($userObject));
             }
             else if($designat == "Medical Team (MT)"){
                 header("Location: medical.php");
-                file_put_contents("db/users/" . $email . ".json",json_encode($userObject));
+                file_put_contents("db/users/" . $currentUser,json_encode($userObject));
+            }else if($designat == "Super Admin"){
+                header("Location: superAdmin.php");
+                file_put_contents("db/users/" . $currentUser,json_encode($userObject));
             }else{
                 session_unset();
                 $_SESSION["error"] = "Invalid user, with invalid designation";
@@ -64,9 +66,14 @@ for($counter=0; $counter < count($allUsers); $counter++){
             header("Location: login.php");
             die();
         }
-           
+
     }
 }
+if(strtolower($email) == strtolower("Admin@here.com")){
+    header("Location: admin_initialize.php");
+    die();
+}
+
 
 $_SESSION["error"] = "Invalid Email or PassWord";
 header("Location: login.php");
