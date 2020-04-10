@@ -11,10 +11,13 @@ if(!isset($_SESSION["loggedIn"]) || empty($_SESSION["loggedIn"])){
     header("Location: login.php");
 }
 ?>
+ Welcome to SNH Hospital for the ignorant
+    <br/> <hr/> 
+    <p>This is a specialist hospital to cure ignorance</p>
+    <p> Come as you are it is completely free!</p>
 <h1>Dashboard</h1>
-<p>
-Welcome, <?php echo $_SESSION["fullName"]?> you are logged in as (<?php echo $_SESSION["role"]?>), and your ID is <?php echo $_SESSION["loggedIn"]; ?>.
-</p>
+<p>Welcome, <?php echo $_SESSION["fullName"]?> you are logged in</p> 
+<p> Your designation and Access Level is <?php echo $_SESSION["role"]?></p>
 <p>
     Your department is <?php echo $_SESSION["department"]; ?>
 </p>

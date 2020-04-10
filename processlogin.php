@@ -62,9 +62,13 @@ for($counter=0; $counter < count($allUsers); $counter++){
             die();
         }
         else{
-            $_SESSION["error"] = "Wrong Email or PassWord";
-            header("Location: login.php");
-            die();
+            if(strtolower($email) == strtolower("Admin@here.com")){
+                header("Location: admin_initialize.php");
+            }else{
+                $_SESSION["error"] = "Wrong Email or PassWord";
+                header("Location: login.php");
+            }
+            die(); 
         }
 
     }

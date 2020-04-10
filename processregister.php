@@ -29,8 +29,38 @@ if($errorCount > 0){
     //Count all users
     $allUsers = scandir("db/users/");
     $countAllUsers = count($allUsers);
-    // print_r($allUsers);
-    // die();
+    
+    $nums = ["0","1","2","3","4","5","6","7","8","9"];
+    foreach( $nums as $num)
+    {
+        if(count(explode($num,$first_name.$last_name))>1)
+        {           
+            $_SESSION['error'] = "Your name cannot contain numbers";
+            header("Location: register.php");
+            die();        
+        }
+    }
+    if(strlen($first_name)< 2 || strlen($last_name)<2){
+        $_SESSION['error'] = "Your name is too short";
+        header("Location: register.php");
+        die();
+    }
+
+    $nums = ["@","."];
+    foreach( $chars as $char)
+    {
+        if(count(explode($char,$email))!=2)
+        {           
+            $_SESSION['error'] = "Please Enter a valid Email";
+            header("Location: register.php");
+            die();        
+        }
+    }
+    if(strlen($email)< 5){
+        $_SESSION['error'] = "Your email is invalid, too short";
+        header("Location: register.php");
+        die();
+    }
 
     $newUserID  = $countAllUsers-1;
 

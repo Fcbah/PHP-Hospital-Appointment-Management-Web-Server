@@ -1,4 +1,7 @@
-<?php include_once('lib/header.php');?>
+<?php include_once('lib/header.php');
+if (isset($_SESSION["loggedIn"]) && !empty($_SESSION["loggedIn"])){
+    header("Location: dashboard.php");
+}?>
     Welcome to SNH Hospital for the ignorant
     <br/> <hr/> 
     <p>This is a specialist hospital to cure ignorance</p>

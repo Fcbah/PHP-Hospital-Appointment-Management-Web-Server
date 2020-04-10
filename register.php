@@ -24,7 +24,7 @@ if (isset($_SESSION["loggedIn"]) && !empty($_SESSION["loggedIn"])){
                     echo "value=".$_SESSION['first_name'];
                 }
             ?>
-            type="text" name= "first_name" placeholder="First Name" />
+            type="text" name= "first_name" placeholder="First Name" required/>
         </p>
         <p>
             <label for="">Last Name</label><br/>
@@ -34,7 +34,7 @@ if (isset($_SESSION["loggedIn"]) && !empty($_SESSION["loggedIn"])){
                     echo "value=".$_SESSION['last_name'];
                 }
             ?>
-            type="text" name= "last_name" placeholder="Last Name" />
+            type="text" name= "last_name" placeholder="Last Name" required/>
         </p>
         <p>
             <label for="">Email</label><br/>
@@ -43,15 +43,15 @@ if (isset($_SESSION["loggedIn"]) && !empty($_SESSION["loggedIn"])){
                 if(isset($_SESSION["email"]) && !empty($_SESSION["email"])){
                     echo "value=".$_SESSION['email'];
                 }
-            ?> type="email" name= "email" placeholder="Email" />
+            ?> type="email" name= "email" placeholder="Email" required/>
         </p>
         <p>
             <label for="">Password</label><br/>
-            <input type="password" name= "password" placeholder="Password" />
+            <input type="password" name= "password" placeholder="Password" required/>
         </p>
         <p>
             <label for="">Gender</label><br/>
-            <select name="gender" id="" >
+            <select name="gender" id="" required>
             <option value="">Select One </option>
                 <option
                 <?php
@@ -71,7 +71,7 @@ if (isset($_SESSION["loggedIn"]) && !empty($_SESSION["loggedIn"])){
         </p>
         <p>
             <label for="">Designation</label><br/>
-            <select name="designation" id="" >
+            <select name="designation" id="" required>
                 <option value="">Select One</option>
                 <option
                 <?php
@@ -97,7 +97,7 @@ if (isset($_SESSION["loggedIn"]) && !empty($_SESSION["loggedIn"])){
                     echo "value=".$_SESSION['department'];
                 }
             ?>
-            type="text" name= "department" placeholder="Department" />
+            type="text" name= "department" placeholder="Department" required/>
         </p>
         <p>
             <button type="submit">Register</button>

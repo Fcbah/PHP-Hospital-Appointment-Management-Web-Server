@@ -31,11 +31,11 @@
                 if(isset($_SESSION["email"]) && !empty($_SESSION["email"])){
                     echo "value=".$_SESSION['email'];
                 }
-            ?> type="email" name= "email" placeholder="Email" />
+            ?> type="email" name= "email" placeholder="Email" required/>
         </p>
         <p>
             <label for="">Password</label><br/>
-            <input type="password" name= "password" placeholder="Password" />
+            <input type="password" name= "password" placeholder="Password" required/>
         </p>
 
         <p>
