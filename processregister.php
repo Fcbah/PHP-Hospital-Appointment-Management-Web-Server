@@ -30,9 +30,11 @@ if($errorCount > 0){
     $allUsers = scandir("db/users/");
     $countAllUsers = count($allUsers);
     
+    //check if name contains numbers (forbidden)
     $nums = ["0","1","2","3","4","5","6","7","8","9"];
     foreach( $nums as $num)
     {
+        //I try to split the concatenation of both names using the invalid character as a delimiter. if the string splits, then it contains the invalid character
         if(count(explode($num,$first_name.$last_name))>1)
         {           
             $_SESSION['error'] = "Your name cannot contain numbers";
@@ -40,15 +42,18 @@ if($errorCount > 0){
             die();        
         }
     }
+    //check if name is not too short
     if(strlen($first_name)< 2 || strlen($last_name)<2){
         $_SESSION['error'] = "Your name is too short";
         header("Location: register.php");
         die();
     }
 
-    $nums = ["@","."];
+    //check if email contain @ and . (required characters)
+    $chars = ["@","."];
     foreach( $chars as $char)
     {
+        //strategy is same as above line-37
         if(count(explode($char,$email))!=2)
         {           
             $_SESSION['error'] = "Please Enter a valid Email";
@@ -56,6 +61,7 @@ if($errorCount > 0){
             die();        
         }
     }
+    //check if email is not too short
     if(strlen($email)< 5){
         $_SESSION['error'] = "Your email is invalid, too short";
         header("Location: register.php");
@@ -80,7 +86,7 @@ if($errorCount > 0){
     //Check if the user already exist
     for($counter=0; $counter < count($allUsers); $counter++){
         $currentUser = $allUsers[$counter];
-        if($currentUser == $email . ".json"){
+        if(strtolower($currentUser) == strtolower($email . ".json")){
             $_SESSION["error"] = "Registration failed, User already exists";
             header("Location: register.php");
             die(); 
