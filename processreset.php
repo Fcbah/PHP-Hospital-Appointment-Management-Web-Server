@@ -42,10 +42,30 @@ if($errorCount > 0){
             $tokenFromDB = $tokenObject->token;
 
             if($tokenFromDB == $token){
-                echo "User can update password";
-            }
+                // echo "User can update password";
+                
+                $allUsers = scandir("db/users/");
 
-            die(); 
+                for($counter=0; $counter < count($allUsers); $counter++){
+                    $currentUser = $allUsers[$counter];
+                    if(strtolower($currentUser) == strtolower($email . ".json")){
+                        $userString = file_get_contents("db/users/".$currentUser );
+                        $userObject = json_decode($userString);
+                        $userObject->password = password_hash($password,PASSWORD_DEFAULT);
+
+                        file_put_contents("db/users/".$currentUser,json_encode($userObject));
+
+                        unlink("db/tokens/".$currentTokenfile);//delete file
+                        
+                        file_put_contents("db/users/".$currentUser,json_encode($userObject));
+
+                        session_destroy();
+                        $_SESSION["message"] = "Password Reset Succesful, You can now Login";
+                        header("Location: login.php");
+                        die();
+                    }//end if
+               }//end for
+            }            
         }
     }
     $_SESSION["message"] = "Password Reset failed, token/email invalid or expired";
