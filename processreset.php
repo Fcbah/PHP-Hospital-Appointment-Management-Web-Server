@@ -59,7 +59,6 @@ if($errorCount > 0){
                         
                         file_put_contents("db/users/".$currentUser,json_encode($userObject));
 
-                        session_destroy();
                         $_SESSION["message"] = "Password Reset Succesful, You can now Login";
                         header("Location: login.php");
                         die();
