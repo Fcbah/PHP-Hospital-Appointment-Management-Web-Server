@@ -17,7 +17,7 @@ if($errorCount > 0){
     echo "No errors";
 }
 
-$allUsers = scandir("db/users/");
+
 // if(strtolower($email)  == strtolower("Admin@here.com")){
 //     require("lib/AdminPassword.php");
 //     if(password_verify($password,$Admin_Password)){
@@ -27,6 +27,7 @@ $allUsers = scandir("db/users/");
 //         header("Location: superAdmin.php");
 //         die();                   
 //}
+$allUsers = scandir("db/users/");
 
 for($counter=0; $counter < count($allUsers); $counter++){
     $currentUser = $allUsers[$counter];

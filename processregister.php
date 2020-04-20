@@ -54,8 +54,11 @@ if($errorCount > 0){
     foreach( $chars as $char)
     {
         //strategy is same as above line-37
-        if(count(explode($char,$email))!=2)
-        {           
+        if($char=="." && count(explode($char,$email)) > 2 ){
+            //DO NOTHING
+            //to allow for sub-domains email e.g. fcbah@contact.hng.com
+        }else if(count(explode($char,$email))!=2){
+                       
             $_SESSION['error'] = "Please Enter a valid Email";
             header("Location: register.php");
             die();        

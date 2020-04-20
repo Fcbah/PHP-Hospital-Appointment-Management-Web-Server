@@ -68,3 +68,19 @@ Procedural
 ---- Login
 * email
 * Password
+
+email: admin@here.com
+password: Admin
+
+*** Forgot Password
+
+--Page to receive their email address
+
+^^^ Verify that the email address they provided is in our database
+^^^ Verify that they have access to that email - send a message to the email. and grant them a code to bring ...
+^^^ Get a code from their email, and enter that code in the page
+--A page for the actual password Reset
+
+***
+-- Old Password Page
+-- New Password
