@@ -28,7 +28,40 @@ if(!is_loggedIn() || !is_medical_team()){
 <div class="table-container">
 <table>
 <?php
-//$all_appointments = get_all_appointments();
+$department = $_SESSION["department"];
+$all_appointments = get_all_appointments($department);
+if ($all_appointments){
+    ?>
+    <tr>
+        <td>Date of appointment</td>
+        <td>Patient Name</td>
+        <td>Nature of Appointment</td>
+        <td>More Information</td>
+    </tr>
+    <?php
+    foreach($all_appointments as $appointment){
+
+        $appointString = file_get_contents("db/appoints/".$department."/".$appointment);
+
+        $appointObject = json_decode($appointString);
+        ?>
+        <tr>            
+            <td><?php echo $appointObject->date_appoint?></td>
+            <td><?php echo $appointObject->name?></td>
+            <td><?php echo $appointObject->nature_appoint?></td>
+            <td><a href="view_patient_details.php?appointment=<?php echo $appointment?>">More Details</a></td>
+        </tr>        
+        <?php
+    }
+}else{
+    ?>
+    <tr>
+        <p>
+            YOU HAVE NO PENDING APPOINTMENTS
+        </p>
+    </tr>
+    <?php
+}
 ?>
 </table>
 </div>

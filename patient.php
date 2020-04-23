@@ -1,5 +1,6 @@
 <?php include_once("lib/header.php");
 require_once("functions/user.php");
+require_once("functions/redirect.php");
 
 //allow only logged in patients
 if(!is_loggedIn() || !is_patient() ){

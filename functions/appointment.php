@@ -1,4 +1,6 @@
 <?php
+require_once("validate.php");
+
 function find_department($department){
     $result = scandir("db/appoints/");
 
@@ -19,6 +21,12 @@ function find_department($department){
     return false;
 }
 
+function get_appointment($department,$appointment){
+    $appointString = file_get_contents("db/appoints/".$department.'/' );
+    $userObject = json_decode($userString);
+    return  $userObject;
+}
+
 function get_all_appointments($department){
     $result = scandir("db/appoints/");
     if($result != false){
@@ -30,10 +38,18 @@ function get_all_appointments($department){
 
             if(strtolower($currentDepartment) == strtolower($department)){
 
-                $result = scandir("db/appoints/".$department);
+                $appointments = scandir("db/appoints/".$department);
 
                 if(count($result)>2){
-                    return $result;
+                    $valid = [];
+                    $count =0;
+                    foreach($appointments as $appointment)
+                    {
+                        if(!length_too_short($appointment,5)){
+                            $valid[$count++] = $appointment;
+                        }
+                    }
+                    return $valid;
                 }
             }
         }
@@ -42,6 +58,6 @@ function get_all_appointments($department){
 }
 
 function add_appointment($department, $appointObject){
-    file_put_contents("db/appoints/".$department."/" . $appointObject->email . ".json",json_encode($appointObject));
+    file_put_contents("db/appoints/".$department."/" . $appointObject["email"] . ".json",json_encode($appointObject));
 }
 ?>

@@ -57,6 +57,7 @@ if($errorCount > 0){
     }
     
     $appointObject =[
+        "name" =>$_SESSION['fullName'],
         "date_appoint" => $date_appoint,
         "time_appoint"=> $time_appoint,
         "email" => $email,
