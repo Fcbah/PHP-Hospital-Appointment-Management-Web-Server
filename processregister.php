@@ -71,7 +71,7 @@ if($errorCount > 0){
 
     //ensure that department does not contain invalid characters
     //because you will use it to create filename for appointments
-    $valid = "abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $valid = "abcdefghijklmnopqrstuvwxyz_-ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     $validityError = 0;
     foreach(str_split($department) as $inp){
         if(strpos($valid,$inp) === false){

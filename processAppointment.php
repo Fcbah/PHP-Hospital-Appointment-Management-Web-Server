@@ -15,13 +15,13 @@ if(!isset($_SESSION["role"]) || $_SESSION["role"] != "Patients"){
 $errorCount = 0;
 
 $email = $_SESSION['email'] != "" ? $_SESSION['email'] : $errorCount++;
-$department = $_SESSION['department'] != "" ? $_SESSION['department'] : $errorCount++;
+$department = $_POST['department'] != "" ? $_POST['department'] : $errorCount++;
 $date_appoint = $_POST['date_appoint'] != "" ? $_POST['date_appoint'] : $errorCount++;
 $time_appoint = $_POST['time_appoint'] != "" ? $_POST['time_appoint'] : $errorCount++;
 $nature_appoint = $_POST['nature_appoint'] != "" ? $_POST['nature_appoint'] : $errorCount++;
 $initial_complaint = $_POST['initial_complaint'] != "" ?$_POST['initial_complaint'] : $errorCount++;
 
-$_SESSION["email"] = $email;
+//$_SESSION["department"] = $department;
 $_SESSION["date_appoint"] = $date_appoint;
 $_SESSION["time_appoint"] = $time_appoint;
 $_SESSION["nature_appoint"] = $nature_appoint;
@@ -32,6 +32,22 @@ if($errorCount > 0){
     $_SESSION['error'] = "You have ".$errorCount . " error".(($errorCount >1) ? "s" : "")." in your form submission";
     header("Location: bookAppointment.php");
 }else{
+
+    //ensure that department does not contain invalid characters
+    //because you will use it to create filename for appointments
+    $valid = "abcdefghijklmnopqrstuvwxyz_-ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $validityError = 0;
+    foreach(str_split($department) as $inp){
+        if(strpos($valid,$inp) === false){
+            $validityError++;            
+        }
+    }
+
+    if($validityError > 0){
+        $_SESSION['error'] = "You have ".$validityError . " invalid character".(($validityError >1) ? "s" : "")." in your department name submission";
+            header("Location: bookAppointment.php");
+            die();
+    }
     
     $appointObject =[
         "date_appoint" => $date_appoint,

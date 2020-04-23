@@ -10,7 +10,7 @@ if(!isset($_SESSION["role"]) || $_SESSION["role"] != "Patients"){
         die();
 }
 ?>
-    <p><strong>Welcome, Please Register</strong></p>
+    <p><strong>Welcome, Please Fill this form to book an appointment with the medical team</strong></p>
     <p>All Fields are required </p>
     <form method="POST" action="processAppointment.php">
     <p>
@@ -47,10 +47,19 @@ if(!isset($_SESSION["role"]) || $_SESSION["role"] != "Patients"){
             <input
             <?php
                 if(isset($_SESSION["nature_appoint"]) && !empty($_SESSION["nature_appoint"])){
-                    echo "value=".$_SESSION['email'];
+                    echo "value=".$_SESSION['nature_appoint'];
                 }
-            ?> type="text" name= "nature_appoint" required/>
-        </p>      
+            ?> type="text" name= "nature_appoint" placeholder="Nature of appointment" required/>
+        </p>
+        <p>
+            <label for="">Department to book Appointment</label><br/>
+            <input
+            <?php
+                if(isset($_SESSION["department"]) && !empty($_SESSION["department"])){
+                    echo "value=".$_SESSION['department'];
+                }
+            ?> type="text" name= "department" placeholder="Department" required/>
+        </p>     
         <p>
             <label for="">Initial Complaint</label><br/>
             <textarea
