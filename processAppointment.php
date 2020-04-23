@@ -29,6 +29,9 @@ $_SESSION["initial_complaint"] = $initial_complaint;
 
 
 if($errorCount > 0){
+
+    //using ternary operator to simplify things 
+    //conditional pluralization of "error"
     $_SESSION['error'] = "You have ".$errorCount . " error".(($errorCount >1) ? "s" : "")." in your form submission";
     header("Location: bookAppointment.php");
 }else{
@@ -44,6 +47,9 @@ if($errorCount > 0){
     }
 
     if($validityError > 0){
+
+        //using ternary operator to simplify things 
+        //conditional pluralization of "error"
         $_SESSION['error'] = "You have ".$validityError . " invalid character".(($validityError >1) ? "s" : "")." in your department name submission";
             header("Location: bookAppointment.php");
             die();

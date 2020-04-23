@@ -1,5 +1,8 @@
 <?php 
 session_start();
+require_once("functions/user.php");
+require_once("functions/token.php");
+require_once("functions/validate.php");
 //collecting the data
 $errorCount = 0;
 
@@ -22,67 +25,60 @@ $_SESSION["department"] = $department;
 
 if($errorCount > 0){
     //Display proper error messages to the user
-    //
-    $_SESSION['error'] = "You have ".$errorCount . " error".(($errorCount >1) ? "s" : "")." in your form submission";
+    
+    //using ternary operator to simplify things 
+    //conditional pluralization of "error"
+    $error_msg = "You have ".$errorCount . " error".(($errorCount >1) ? "s" : "")." in your form submission";
+    set_alert($error_msg, "error");
     header("Location: register.php");
 }else{
     
+
     
     //check if name contains numbers (forbidden)
-    $nums = ["0","1","2","3","4","5","6","7","8","9"];
-    foreach( $nums as $num)
-    {
-        //I try to split the concatenation of both names using the invalid character as a delimiter. if the string splits, then it contains the invalid character
-        if(count(explode($num,$first_name.$last_name))>1)
-        {           
-            $_SESSION['error'] = "Your name cannot contain numbers";
-            header("Location: register.php");
-            die();        
-        }
+    if(contain_numbers($first_name.$last_name) )
+    {           
+        set_alert("Your name cannot contain numbers", "error");
+        header("Location: register.php");
+        die();        
     }
+
+    
     //check if name is not too short
-    if(strlen($first_name)< 2 || strlen($last_name)<2){
-        $_SESSION['error'] = "Your name is too short";
+    if(length_too_short($first_name,2) || length_too_short($last_name,2) ){
+        set_alert("Your name is too short", "error");
         header("Location: register.php");
         die();
     }
-
+    
     //check if email contain @ and . (required characters)
-    $chars = ["@","."];
-    foreach( $chars as $char)
-    {
-        //strategy is same as above line-37
-        if($char=="." && count(explode($char,$email)) > 2 ){
-            //DO NOTHING
-            //to allow for sub-domains email e.g. fcbah@contact.hng.com
-        }else if(count(explode($char,$email))!=2){
-                       
-            $_SESSION['error'] = "Please Enter a valid Email";
-            header("Location: register.php");
-            die();        
-        }
+    if(!email_valid($email)){
+        set_alert("Please Enter a valid Email", "error");
+        header("Location: register.php");
+        die();
     }
+    
+
     //check if email is not too short
-    if(strlen($email)< 5){
-        $_SESSION['error'] = "Your email is invalid, too short";
+    if(length_too_short($email,5)){
+        set_alert("Your email is invalid, too short", "error");
         header("Location: register.php");
         die();
     }
 
-    //ensure that department does not contain invalid characters
-    //because you will use it to create filename for appointments
-    $valid = "abcdefghijklmnopqrstuvwxyz_-ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    $validityError = 0;
-    foreach(str_split($department) as $inp){
-        if(strpos($valid,$inp) === false){
-            $validityError++;            
-        }
-    }
 
+    $validityError = department_name_valid($department);
+    
     if($validityError > 0){
-        $_SESSION['error'] = "You have ".$validityError . " invalid character".(($validityError >1) ? "s" : "")." in your department name submission";
-            header("Location: register.php");
-            die();
+
+        //using ternary operator to simplify things 
+        //conditional pluralization of "error"
+        $valid_err_msg = "You have ".$validityError . " invalid character".(($validityError >1) ? "s" : "")." in your department name submission";
+
+        set_alert($valid_err_msg,"error");
+
+        header("Location: register.php");
+        die();
     }
 
     //Count all users
@@ -105,22 +101,23 @@ if($errorCount > 0){
     
 
     //Check if the user already exist
-    for($counter=0; $counter < count($allUsers); $counter++){
-        $currentUser = $allUsers[$counter];
-        if(strtolower($currentUser) == strtolower($email . ".json")){
-            $_SESSION["error"] = "Registration failed, User already exists";
-            header("Location: register.php");
-            die(); 
-        }
+
+    $userExist = find_user($email);
+
+    if($userExist)
+    {
+        set_alert("Registration failed, User already exists", "error");
+
+        header("Location: register.php");
+        die(); 
     }
-   
-    // *** Count all the users,
-    // *** assign the next id to the new user
-    // Count ($users) => 1, next user should then be Id = 2
 
     //save in the database
-    file_put_contents("db/users/" . $email . ".json",json_encode($userObject));
-    $_SESSION["message"] = "Registration Succesful, You can now Login";
+    save_user($userObject);
+
+    //set_alert() defaults to sending message
+    set_alert("Registration Succesful, You can now Login");
+
     header("Location: login.php");
 }// if error count > 0
 

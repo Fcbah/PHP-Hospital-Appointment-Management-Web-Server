@@ -1,16 +1,18 @@
 <?php 
 include_once('lib/header.php');
 require_once('functions/alert.php');
+require_once("functions/user.php");
 ?>
     <h1>Login</h1>
     <p>
         <?php
-        if (isset($_SESSION["loggedIn"]) && !empty($_SESSION["loggedIn"])){
+        if (is_loggedIn()){
             header("Location: dashboard.php");
             die();
         }
-        
-        print_alert()        
+
+        display_alert();  
+
         ?>
     </p>
     

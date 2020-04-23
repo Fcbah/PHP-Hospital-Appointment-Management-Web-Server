@@ -1,6 +1,11 @@
-<?php include_once('lib/header.php');?>
+<?php 
+include_once('lib/header.php');
+require_once('functions/alert.php');
+require_once('functions/user.php');
+
+?>
 <?php
-if (isset($_SESSION["loggedIn"]) && !empty($_SESSION["loggedIn"])){
+if (is_loggedIn() && !is_super_admin()){
     header("Location: dashboard.php");
     die();
 }
@@ -10,11 +15,7 @@ if (isset($_SESSION["loggedIn"]) && !empty($_SESSION["loggedIn"])){
     <form method="POST" action="processregister.php">
     <p>
         <?php
-            if(isset($_SESSION["error"]) && !empty($_SESSION["error"])){
-                echo "<span style='color:red'>". $_SESSION['error']."</span>";
-                //session_unset();
-                session_destroy();
-            }
+        display_alert();
         ?>
     </p>
         <p>

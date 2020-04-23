@@ -10,7 +10,9 @@ $_SESSION["email"] = $email;
 
 if($errorCount > 0){
     //Display proper error messages to the user
-    //
+    
+    //using ternary operator to simplify things 
+    //conditional pluralization of "error"
     $_SESSION['error'] = "You have ".$errorCount . " error". (($errorCount >1 ) ? "s": "") ." in your login details";
     header("Location: login.php");
 }else{

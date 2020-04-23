@@ -27,6 +27,10 @@ function display_alert(){
         echo "<span style='color:green'>". $_SESSION['message']."</span>";
         $destroySession = true;
     }
+    if(isset($_SESSION["info"]) && !empty($_SESSION["info"])){
+        echo "<span style='color:grey'>". $_SESSION['message']."</span>";
+        $destroySession = true;
+    }
     if ($destroySession){
         session_destroy();
     }
