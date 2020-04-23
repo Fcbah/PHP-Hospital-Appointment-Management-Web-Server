@@ -21,10 +21,10 @@ function find_department($department){
     return false;
 }
 
-function get_appointment($department,$appointment){
-    $appointString = file_get_contents("db/appoints/".$department.'/' );
-    $userObject = json_decode($userString);
-    return  $userObject;
+function get_appointObject($department,$appointment){
+    $appointString = file_get_contents("db/appoints/".$department.'/'. $appointment);
+    $appointObject = json_decode($appointString);
+    return  $appointObject;
 }
 
 function get_all_appointments($department){

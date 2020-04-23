@@ -11,6 +11,7 @@ if(!is_get("appointment")){
 $email = $_GET["appointment"];
 $department =$_SESSION["department"];
 
+get_appointObject($department,$appointment);
 
 ?>
 <div>
