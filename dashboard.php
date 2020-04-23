@@ -1,20 +1,22 @@
 <?php include_once("lib/header.php");
-if(!isset($_SESSION["loggedIn"]) || empty($_SESSION["loggedIn"])){
-    //redirect to our dashboard
-    header("Location: login.php");
+require_once("functions/user.php");
+require_once("functions/redirect.php");
+
+if(!is_loggedIn()){
+    //redirect to our login
+    redirect_to("login.php");
 }
-$designat = $_SESSION["role"];
-if($designat == "Patients"){
-    header("Location: patient.php");
+
+if(is_patient()){
+    redirect_to("patient.php");
 }
-else if($designat == "Medical Team (MT)"){
-    header("Location: medical.php");
+else if(is_medical_team()){
+    redirect_to("medical.php");
+}else if(is_super_admin()){
+    redirect_to("superAdmin.php");
 }else{
-    header("Location: superAdmin.php");
+    set_alert("You are not authorized to view that page", "error");
+    redirect_to("login.php");
 }
 ?>
-<h1>Dashboard</h1>
-<p>
-Welcome, <?php echo $_SESSION["fullName"]?> you are logged in as (<?php echo $_SESSION["role"]?>), and your ID is <?php echo $_SESSION["loggedIn"]; ?>.
-</p>
 <?php include_once("lib/footer.php")?>

@@ -2,18 +2,17 @@
 function display_error(){
     if(isset($_SESSION["error"]) && !empty($_SESSION["error"])){
         echo "<span style='color:red'>". $_SESSION['error']."</span>";
-        //session_unset();
         session_destroy();
-    }//end if
-}//end funtion
+    }
+}
 
+//I will not destroy session for display message because superAdmin can get messages when registering people. So as not to log the superAdmin out unnecessarily.
 function display_msg(){
     if(isset($_SESSION["message"]) && !empty($_SESSION["message"])){
         echo "<span style='color:green'>". $_SESSION['message']."</span>";
-        //session_unset();
-        session_destroy();
-    }//end if
-}//end function
+        $_SESSION["message"] = "";//so as not to destroy superAdmin session during registration
+    }
+}
 
 function display_alert(){
     //to track if the session should be destroyed or not
@@ -22,10 +21,10 @@ function display_alert(){
     if(isset($_SESSION["error"]) && !empty($_SESSION["error"])){
         echo "<span style='color:red'>". $_SESSION['error']."</span>";
         $destroySession = true;
-    }//end if
+    }
     if(isset($_SESSION["message"]) && !empty($_SESSION["message"])){
         echo "<span style='color:green'>". $_SESSION['message']."</span>";
-        $destroySession = true;
+        $_SESSION["message"] = "";
     }
     if(isset($_SESSION["info"]) && !empty($_SESSION["info"])){
         echo "<span style='color:grey'>". $_SESSION['message']."</span>";
@@ -54,6 +53,6 @@ function set_alert($content = "",$type = "message"){
             $_SESSION['message'] = $content;
         break;
     }
-}//end function
+}
 
 ?>

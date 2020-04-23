@@ -1,14 +1,19 @@
 <?php
 session_start();
+require_once('functions/user.php');
+require_once('functions/redirect.php');
+require_once('functions/alert.php');
+require_once('functions/validate.php');
+require_once('functions/appointment.php');
 
-if (!isset($_SESSION["loggedIn"]) || empty($_SESSION["loggedIn"])){
-    header("Location: login.php");
-    die();
+
+
+if (!is_loggedIn()){
+    redirect_to("login.php");
 }
-if(!isset($_SESSION["role"]) || $_SESSION["role"] != "Patients"){
-    $_SESSION["error"] = "You are not authorized to view that page";
-        header("Location: login.php");
-        die();
+if(!is_patient()){
+    set_alert("This page is not meant for you","message");
+    redirect_to("dashboard.php");
 }
 
 //collecting the data
@@ -32,27 +37,23 @@ if($errorCount > 0){
 
     //using ternary operator to simplify things 
     //conditional pluralization of "error"
-    $_SESSION['error'] = "You have ".$errorCount . " error".(($errorCount >1) ? "s" : "")." in your form submission";
-    header("Location: bookAppointment.php");
+    $error_msg = "You have ".$errorCount . " error".(($errorCount >1) ? "s" : "")." in your form submission";
+    
+    set_alert($error_msg,"error");
+    redirect_to("bookAppointment.php");
 }else{
 
-    //ensure that department does not contain invalid characters
-    //because you will use it to create filename for appointments
-    $valid = "abcdefghijklmnopqrstuvwxyz_-ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    $validityError = 0;
-    foreach(str_split($department) as $inp){
-        if(strpos($valid,$inp) === false){
-            $validityError++;            
-        }
-    }
+    //ensure that department name does not contain invalid characters
+    $validityError = department_name_valid($department);
 
     if($validityError > 0){
 
         //using ternary operator to simplify things 
         //conditional pluralization of "error"
-        $_SESSION['error'] = "You have ".$validityError . " invalid character".(($validityError >1) ? "s" : "")." in your department name submission";
-            header("Location: bookAppointment.php");
-            die();
+        $error_msg = "You have ".$validityError . " invalid character".(($validityError >1) ? "s" : "")." in your department name submission";
+
+        set_alert($error_msg,"error");
+        redirect_to("bookAppointment.php");
     }
     
     $appointObject =[
@@ -64,29 +65,17 @@ if($errorCount > 0){
         "reg_date_time" => explode(" ",date("Y m d h i s A"))
     ];
 
-    $departmentExist = false;
-    $result = scandir("db/appoints/");
-    if($result != false){
-        $allDepartment = $result;
-        for($counter=0; $counter < count($allDepartment); $counter++){
-            $currentDepartment = $allDepartment[$counter];
-            if(strtolower($currentDepartment) == strtolower($department)){
-                $departmentExist = true;
-            }
-        }
-    }//end result
-    
+    $departmentExist = find_department($department);   
     
     if($departmentExist){
-        file_put_contents("db/appoints/".$department."/" . $email . ".json",json_encode($appointObject));
-        echo "directory dey";
+        add_appointment($department,$appointObject);
     }
     else{
         mkdir("db/appoints/".$department, 0777,true);
-        echo("No directory");
-        file_put_contents("db/appoints/".$department."/" . $email . ".json",json_encode($appointObject));
+        add_appointment($department,$appointObject);
     }
-    $_SESSION["message"] = "Appointment Succesful registered";
-    header("Location: dashboard.php");
+    
+    set_alert("Appointment Succesfully registered");
+    redirect_to("dashboard.php");
 }
 ?>

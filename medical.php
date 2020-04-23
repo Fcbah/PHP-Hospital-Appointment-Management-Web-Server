@@ -1,7 +1,12 @@
 <?php include_once("lib/header.php");
-if(!isset($_SESSION["loggedIn"]) || empty($_SESSION["loggedIn"])){
-    //redirect to our dashboard
-    header("Location: login.php");
+require_once("functions/user.php");
+require_once("functions/redirect.php");
+require_once("functions/appointment.php");
+
+//only logged in medical team can come here
+if(!is_loggedIn() || !is_medical_team()){
+    
+    redirect_to("dashboard.php");
 }
 ?>
    Welcome to SNH Hospital for the ignorant
@@ -20,4 +25,11 @@ if(!isset($_SESSION["loggedIn"]) || empty($_SESSION["loggedIn"])){
 <p>
     Your Last Login Time was <?php $dt =$_SESSION["last_login"]; echo $dt[3].":".$dt[4].":".$dt[5]." ".$dt[6]." on ".$dt[2]."/".$dt[1]."/".$dt[0]?>
 </p>
+<div class="table-container">
+<table>
+<?php
+//$all_appointments = get_all_appointments();
+?>
+</table>
+</div>
 <?php include_once("lib/footer.php")?>

@@ -1,5 +1,8 @@
 <?php
 session_start();
+require_once("functions/user.php");
+require_once("functions/alert.php");
+require_once("functions/redirect.php");
 
 $errorCount = 0;
 
@@ -13,77 +16,58 @@ if($errorCount > 0){
     
     //using ternary operator to simplify things 
     //conditional pluralization of "error"
-    $_SESSION['error'] = "You have ".$errorCount . " error". (($errorCount >1 ) ? "s": "") ." in your login details";
-    header("Location: login.php");
-}else{
-    echo "No errors";
+    set_alert("You have ".$errorCount . " error". (($errorCount >1 ) ? "s": "") ." in your login details","error");
+    redirect_to("login.php");
 }
 
+$userObject = find_user($email);
 
-// if(strtolower($email)  == strtolower("Admin@here.com")){
-//     require("lib/AdminPassword.php");
-//     if(password_verify($password,$Admin_Password)){
-//         $_SESSION["Mode"] = "Super Admin";
-//         $_SESSION["loggedIn"] = -1;
-//         $_SESSION["role"] = "Super Admin";
-//         header("Location: superAdmin.php");
-//         die();                   
-//}
-$allUsers = scandir("db/users/");
-
-for($counter=0; $counter < count($allUsers); $counter++){
-    $currentUser = $allUsers[$counter];
-    if(strtolower($currentUser) == strtolower($email . ".json")){
-        $userString = file_get_contents("db/users/".$currentUser );
-        $userObject = json_decode($userString);
-        $pass4rmdb = $userObject->password;
+if ($userObject){
+    $pass4rmdb = $userObject->password;
         
-        if(password_verify($password,$pass4rmdb)){
-            $_SESSION['loggedIn'] = $userObject->id;
-            $_SESSION["fullName"] = $userObject->first_name. " " . $userObject->last_name; 
-            $designat = $_SESSION["role"] = $userObject->designation;
-            $userObject->{"last_login"} = explode(" ",date("Y m d h i s A"));
-            $_SESSION["reg_date_time"] = $userObject->reg_date_time;
-            $_SESSION["last_login"] = $userObject->last_login;
-            $_SESSION["department"] = $userObject->department;
-            
-            if($designat == "Patients"){
-                header("Location: patient.php");
-                file_put_contents("db/users/" . $currentUser,json_encode($userObject));
-            }
-            else if($designat == "Medical Team (MT)"){
-                header("Location: medical.php");
-                file_put_contents("db/users/" . $currentUser,json_encode($userObject));
-            }else if($designat == "Super Admin"){
-                header("Location: superAdmin.php");
-                file_put_contents("db/users/" . $currentUser,json_encode($userObject));
-            }else{
-                session_unset();
-                $_SESSION["error"] = "Invalid user, with invalid designation";
-                header("Location: register.php");
-            }
-            die();
+    if(password_verify($password,$pass4rmdb)){
+        $_SESSION['loggedIn'] = $userObject->id;
+        $_SESSION["fullName"] = $userObject->first_name. " " . $userObject->last_name; 
+        $designat = $_SESSION["role"] = $userObject->designation;
+        $userObject->{"last_login"} = explode(" ",date("Y m d h i s A"));
+        $_SESSION["reg_date_time"] = $userObject->reg_date_time;
+        $_SESSION["last_login"] = $userObject->last_login;
+        $_SESSION["department"] = $userObject->department;
+        
+        if(is_patient()){
+            update_user($userObject);        
+            redirect_to("patient.php");            
         }
-        else{
-            if(strtolower($email) == strtolower("Admin@here.com")){
-                header("Location: admin_initialize.php");
-            }else{
-                $_SESSION["error"] = "Wrong Email or PassWord";
-                header("Location: login.php");
-            }
-            die(); 
+        else if(is_medical_team()){
+            update_user($userObject);
+            redirect_to("medical.php");
+        }else if(is_super_admin()){
+            update_user($userObject);
+            redirect_to("superAdmin.php");         
+        }else{
+            set_alert("Invalid user, with invalid designation","error");
+            redirect_to("register.php");
         }
+        
+    }else{
 
+        //To check if admin password has been changed in server files.
+        if(strtolower($email) == strtolower("Admin@here.com")){
+           redirect_to("admin_initialize.php");
+        }else{
+            set_alert("Wrong Email or PassWord","error");
+            redirect_to("login.php");
+        }
     }
-}
+}        
+
+//Incase the admin user has not been initialized at all
 if(strtolower($email) == strtolower("Admin@here.com")){
-    header("Location: admin_initialize.php");
-    die();
+    redirect_to("admin_initialize.php");
 }
 
 
-$_SESSION["error"] = "Invalid Email or PassWord";
-header("Location: login.php");
-die(); 
+set_alert("Invalid Email or PassWord","error");
+redirect_to("login.php");
 
 ?>

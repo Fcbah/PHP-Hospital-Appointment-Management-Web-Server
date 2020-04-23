@@ -1,25 +1,23 @@
-<?php include_once('lib/header.php');?>
+<?php include_once('lib/header.php');
+include_once('functions/user.php');
+include_once('functions/alert.php');
+include_once('functions/redirect.php');
+?>
 <?php
-if (!isset($_SESSION["loggedIn"]) || empty($_SESSION["loggedIn"])){
-    header("Location: login.php");
-    die();
+if (!is_loggedIn()){
+    redirect_to("login.php");
 }
-if(!isset($_SESSION["role"]) || $_SESSION["role"] != "Patients"){
-    $_SESSION["error"] = "You are not authorized to view that page";
-        header("Location: login.php");
-        die();
+if(!is_patient()){
+    set_alert("You are not authorized to view that page");
+    redirect_to("dashboard.php");
 }
 ?>
-    <p><strong>Welcome, Please Fill this form to book an appointment with the medical team</strong></p>
+    <p><strong>Welcome, Please fill this form to book an appointment with the medical team</strong></p>
     <p>All Fields are required </p>
     <form method="POST" action="processAppointment.php">
     <p>
         <?php
-            if(isset($_SESSION["error"]) && !empty($_SESSION["error"])){
-                echo "<span style='color:red'>". $_SESSION['error']."</span>";
-                //session_unset();
-                session_destroy();
-            }
+            display_alert();
         ?>
     </p>
         <p>

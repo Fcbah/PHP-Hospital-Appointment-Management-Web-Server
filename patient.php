@@ -1,7 +1,10 @@
 <?php include_once("lib/header.php");
-if(!isset($_SESSION["loggedIn"]) || empty($_SESSION["loggedIn"])){
-    //redirect to our dashboard
-    header("Location: login.php");
+require_once("functions/user.php");
+
+//allow only logged in patients
+if(!is_loggedIn() || !is_patient() ){
+    
+    redirect_to("dashboard.php");
 }
 ?>
  Welcome to SNH Hospital for the ignorant

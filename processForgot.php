@@ -1,4 +1,10 @@
 <?php session_start();
+require_once('functions/user.php');
+require_once('functions/redirect.php');
+require_once('functions/alert.php');
+require_once('functions/token.php');
+require_once('functions/email.php');
+
 $errorCount = 0;
 
 $email = $_POST['email'] != "" ? $_POST['email'] : $errorCount++;
@@ -6,79 +12,50 @@ $email = $_POST['email'] != "" ? $_POST['email'] : $errorCount++;
 $_SESSION["email"] = $email;
 
 if($errorCount > 0){
-    $_SESSION['error'] = "You have ".$errorCount . " error".(($errorCount >1) ? "s" : "")." in your form submission";
-    header("Location: forgot.php");
+    $error_msg = "You have ".$errorCount . " error".(($errorCount >1) ? "s" : "")." in your form submission";
+
+    set_alert($error_msg,"error");
+    redirect_to("forgot.php");
 }else{
-     //Count all users
-     $allUsers = scandir("db/users/");
-     $countAllUsers = count($allUsers);
+    
+    $userExist = find_user($email);
 
-     //Check if the user already exist
-    for($counter=0; $counter < count($allUsers); $counter++){
-        $currentUser = $allUsers[$counter];
-        if(strtolower($currentUser) == strtolower($email . ".json")){
-            //send the email
+    if($userExist){
+        $token = token_generate();
 
-            /*
-            GENERATING TOKEN CODE STARTS
-             */
+        save_token($email, json_encode(['token'=> $token]));
 
-            $token = "hssdfjsfssgdfgdgdssd";
-            $token ="";
+        /*
+        The remaining lines is all about sending the email notification and redirecting to login page.
+        */
 
-            $alphabets = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A', 'B', 'C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 
-            for($i =0; $i<26; $i++){
-                //get the random number
-                //get the corresponding alphabet
-                //add that to the token string
-                $index = mt_rand(0,count($alphabets)-1);
-                $token .= $alphabets[$index];
-            }
+        //To ensure that the reset link is point to the right location 
+        //even though the domain name of the server is changed.
+        $server = dirname($_SERVER['HTTP_REFERER']);
 
-            /*
-            TOKEN GENERATION ENDS
-             */
+        $subject = "Password Reset Link";
+        $message = "A password reset has been initiated from your account, if you did not initiate this reset, please ignore this message, otherwise, visit: ". $server."/reset.php?token=".$token;
 
-             //To ensure that the reset link is point to the right location 
-             //even though the domain name of the server is changed.
-            $server = dirname($_SERVER['HTTP_REFERER']); //dirname($_SERVER['PHP_SELF'])
+        $try = send_mail($email, $subject, $message);
 
-            $subject = "Password Reset Link";
-            $message = "A password reset has been initiated from your account, if you did not initiate this reset, please ignore this message, otherwise, visit: ". $server."/reset.php?token=".$token;
-            $headers = "From: no-reply@snh.org". " \r\n". "CC: fcbah1248@snh.org";
+        if($try){
+            // //display a success message
+            // set_alert("Password reset has been sent to your email: ". $email);
+            // redirect_to("login.php");
 
-            file_put_contents("db/tokens/" . $email . ".json",json_encode(['token'=> $token]));
+            //temporary_success_message
+            set_alert("Password reset has been sent to your email: ". $email.' "'.$message.'" ');
+            redirect_to("login.php");
 
-            $try = mail($email, $subject,$message, $headers);
-
-          
-            // print_r($try);
-            // die();
-
-            if($try){
-                // //display a success message
-                // $_SESSION["message"] = "Password reset has been sent to your email:  ". $email;
-                // header("Location: login.php");
-
-                //temporary success message
-                $_SESSION['message'] = "Password reset has been sent to your email:  ". $email.' "'.$message.'" ';
-                header("Location: login.php");   
-            }else{
-                //temporary error message
-                // $_SESSION["error"] = 'Something went wrong, we could not send "'.$message.'" to : '. $email;
-                // header("Location: forgot.php");
-                
-                //display error message
-                $_SESSION["error"] = "Something went wrong, we could not send a password reset to :  ". $email;
-                header("Location: forgot.php");
-            }
-
-            die();
+        }else{
+            set_alert("Something went wrong, we could not send a password reset to : ". $email, "error");
+            redirect_to("login.php");
         }
-    }
+
+    }//end if email is registered
 }//end else errorcount > 0
 
-$_SESSION["error"] = "Email not registered with us ";
-header("Location: forgot.php");
+set_alert("Email not registered with us ","error");
+redirect_to("forgot.php");
 ?>

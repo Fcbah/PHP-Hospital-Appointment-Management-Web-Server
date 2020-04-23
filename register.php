@@ -2,12 +2,14 @@
 include_once('lib/header.php');
 require_once('functions/alert.php');
 require_once('functions/user.php');
+require_once("functions/redirect.php");
 
 ?>
 <?php
+//This is to allow super Admin to register
+//and at the same time dissallow other logged in users from registering.
 if (is_loggedIn() && !is_super_admin()){
-    header("Location: dashboard.php");
-    die();
+    redirect_to("dashboard.php");
 }
 ?>
     <p><strong>Welcome, Please Register</strong></p>

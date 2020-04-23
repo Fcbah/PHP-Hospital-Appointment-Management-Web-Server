@@ -3,6 +3,7 @@ session_start();
 require_once("functions/user.php");
 require_once("functions/token.php");
 require_once("functions/validate.php");
+require_once("functions/redirect.php");
 //collecting the data
 $errorCount = 0;
 
@@ -30,40 +31,34 @@ if($errorCount > 0){
     //conditional pluralization of "error"
     $error_msg = "You have ".$errorCount . " error".(($errorCount >1) ? "s" : "")." in your form submission";
     set_alert($error_msg, "error");
-    header("Location: register.php");
+    redirect_to("register.php");
 }else{
-    
-
     
     //check if name contains numbers (forbidden)
     if(contain_numbers($first_name.$last_name) )
     {           
         set_alert("Your name cannot contain numbers", "error");
-        header("Location: register.php");
-        die();        
+        redirect_to("register.php");        
     }
 
     
     //check if name is not too short
     if(length_too_short($first_name,2) || length_too_short($last_name,2) ){
         set_alert("Your name is too short", "error");
-        header("Location: register.php");
-        die();
+        redirect_to("register.php");
     }
     
     //check if email contain @ and . (required characters)
     if(!email_valid($email)){
         set_alert("Please Enter a valid Email", "error");
-        header("Location: register.php");
-        die();
+        redirect_to("register.php");
     }
     
 
     //check if email is not too short
     if(length_too_short($email,5)){
         set_alert("Your email is invalid, too short", "error");
-        header("Location: register.php");
-        die();
+        redirect_to("register.php");
     }
 
 
@@ -77,8 +72,7 @@ if($errorCount > 0){
 
         set_alert($valid_err_msg,"error");
 
-        header("Location: register.php");
-        die();
+        redirect_to("register.php");
     }
 
     //Count all users
@@ -108,8 +102,7 @@ if($errorCount > 0){
     {
         set_alert("Registration failed, User already exists", "error");
 
-        header("Location: register.php");
-        die(); 
+        redirect_to("register.php"); 
     }
 
     //save in the database
@@ -118,7 +111,7 @@ if($errorCount > 0){
     //set_alert() defaults to sending message
     set_alert("Registration Succesful, You can now Login");
 
-    header("Location: login.php");
+    redirect_to("login.php");
 }// if error count > 0
 
 

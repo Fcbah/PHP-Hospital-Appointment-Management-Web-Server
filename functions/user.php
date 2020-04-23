@@ -16,8 +16,21 @@ function is_get($parameter){
 function is_loggedIn(){
     return is_session("loggedIn");
 }
+
+function is_role($role){
+    return is_session('role') && ($_SESSION["role"] == $role);
+}
+
 function is_super_admin(){
-    return is_session('role') && ($_SESSION["role"] == "Super Admin") ;
+    return is_role("Super Admin");
+}
+
+function is_patient(){
+    return is_role("Patients");
+}
+
+function is_medical_team(){
+    return is_role("Medical Team (MT)");
 }
 
 //checks if token is set

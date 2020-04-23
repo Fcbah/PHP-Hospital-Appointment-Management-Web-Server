@@ -2,13 +2,13 @@
 include_once('lib/header.php');
 require_once('functions/alert.php');
 require_once("functions/user.php");
+require_once("functions/redirect.php");
 ?>
     <h1>Login</h1>
     <p>
         <?php
         if (is_loggedIn()){
-            header("Location: dashboard.php");
-            die();
+            redirect_to("dashboard.php");
         }
 
         display_alert();  

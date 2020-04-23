@@ -1,14 +1,13 @@
-<?php include_once('lib/header.php');?>
+<?php include_once('lib/header.php');
+require_once("functions/alert.php");
+
+?>
     <h1>Forgot Password</h1>
     <p>Provide the email address associated with your account </p>
     <form action="processForgot.php" method="POST">
         <p>
             <?php
-                if(isset($_SESSION["error"]) && !empty($_SESSION["error"])){
-                    echo "<span style='color:red'>". $_SESSION['error']."</span>";
-                    //session_unset();
-                    session_destroy();
-                }
+                display_alert();
             ?>
         </p>
         <p>

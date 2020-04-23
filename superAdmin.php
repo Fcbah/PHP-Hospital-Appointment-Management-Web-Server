@@ -1,20 +1,25 @@
 <?php include_once("lib/header.php");
-if(!isset($_SESSION["role"]) || !($_SESSION["role"] == "Super Admin")){
-    session_destroy();
-    header("Location: login.php");
-    die();
+require_once("functions/user.php");
+require_once("functions/redirect.php");
+
+//only a loggedin Super_Admin or non_logged in users can register.
+if(is_loggedIn() && !is_super_admin()){
+
+    session_destroy();// I am doing this because it can be a security threat
+    redirect_to("dashboard.php");
 }
 ?>
-<?php
-if(!isset($_SESSION["loggedIn"]) || empty($_SESSION["loggedIn"])){
-    header("Location: login.php");
-}
-?>
+
  Welcome to SNH Hospital for the ignorant
     <br/> <hr/> 
     <p>This is a specialist hospital to cure ignorance</p>
     <p> Come as you are it is completely free!</p>
 <h1>Dashboard</h1><br/>
+<p>
+    <?php 
+    //This is to ensure the superAdmin can get sucess messages when he registers people
+    display_msg()?>
+</p>
 <p>Welcome, <?php echo $_SESSION["fullName"]?> you are logged in</p> 
 <p> Your designation and Access Level is <?php echo $_SESSION["role"]?></p>
 <p>

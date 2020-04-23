@@ -1,28 +1,26 @@
 <?php include_once('lib/header.php');
-    //if token is set
-    if(!isset($_SESSION["loggedIn"]) && !isset($_GET['token']) && !isset($_SESSION['token'])){
-        $_SESSION["error"] = "You are not authorized to view that page";
-        header("Location: login.php");
-        die();
+require_once("functions/alert.php");
+require_once("functions/user.php");
+require_once("functions/redirect.php");
+    //dont allow unset token or un
+    if(!is_loggedIn() && !is_token_set()){
+        set_alert("You are not authorized to view that page","error");
+        redirect_to("login.php");
     }?>
     <h1>Reset Password</h1>
     <p>Reset Password associated with your account :[email] </p>
     <form action="processreset.php" method="POST">
         <p>
             <?php
-                if(isset($_SESSION["error"]) && !empty($_SESSION["error"])){
-                    echo "<span style='color:red'>". $_SESSION['error']."</span>";
-                    //session_unset();
-                    session_destroy();
-                }
+                display_alert();
             ?>
         </p>
-        <?php if(!isset($_SESSION["loggedIn"])){?>
+        <?php if(!is_loggedIn()){?>
         <p>            
             <input type="hidden" 
             value="<?php
             //using ternary operator to simplify things
-             echo  isset($_SESSION['token']) ? $_SESSION['token']  :$_GET['token']?>" 
+             echo  is_session_token_set() ? $_SESSION['token']  :$_GET['token']?>" 
              name= "token" required/>
         </p>
         <p>
