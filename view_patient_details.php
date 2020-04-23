@@ -8,10 +8,10 @@ require_once("functions/redirect.php");
 if(!is_get("appointment")){
     redirect_to("medical.php");
 }
-$email = $_GET["appointment"];
+$appointment = $_GET["appointment"];
 $department =$_SESSION["department"];
 
-get_appointObject($department,$appointment);
+$appointObject = get_appointObject($department,$appointment);
 
 ?>
 <div>
@@ -20,6 +20,26 @@ get_appointObject($department,$appointment);
         <tr>
             <td>Info:</td>
             <td>Details</td>
+        </tr>
+        <tr>
+            <td>Patient Name</td>
+            <td><?php echo  $appointObject->name?></td>
+        </tr>
+        <tr>
+            <td>Date of appointment</td>
+            <td><?php echo  $appointObject->date_appoint?></td>
+        </tr>
+        <tr>
+            <td>Time of appointment</td>
+            <td><?php echo  $appointObject->time_appoint?></td>
+        </tr>
+        <tr>
+            <td>Nature of Complaints</td>
+            <td><?php echo  $appointObject->nature_appoint?></td>
+        </tr>
+        <tr>
+            <td>Initial Complaints</td>
+            <td><?php echo  $appointObject->initial_complaint?></td>
         </tr>
         <?php
         ?>
