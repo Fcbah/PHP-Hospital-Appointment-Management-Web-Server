@@ -1,27 +1,21 @@
-<?php include_once('lib/header.php');?>
+<?php 
+include_once('lib/header.php');
+require_once('functions/alert.php');
+?>
     <h1>Login</h1>
     <p>
         <?php
         if (isset($_SESSION["loggedIn"]) && !empty($_SESSION["loggedIn"])){
             header("Location: dashboard.php");
+            die();
         }
-            if(isset($_SESSION["message"]) && !empty($_SESSION["message"])){
-                echo "<span style='color:green'>". $_SESSION['message']."</span>";
-                //session_unset();
-                session_destroy();
-            }
+        
+        print_alert()        
         ?>
     </p>
     
     <form method="POST" action="processlogin.php">
     <p>
-        <?php
-            if(isset($_SESSION["error"]) && !empty($_SESSION["error"])){
-                echo "<span style='color:red'>". $_SESSION['error']."</span>";
-                //session_unset();
-                session_destroy();
-            }
-        ?>
     </p>
         
         <p>

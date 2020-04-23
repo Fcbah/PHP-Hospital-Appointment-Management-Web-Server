@@ -26,9 +26,7 @@ if($errorCount > 0){
     $_SESSION['error'] = "You have ".$errorCount . " error".(($errorCount >1) ? "s" : "")." in your form submission";
     header("Location: register.php");
 }else{
-    //Count all users
-    $allUsers = scandir("db/users/");
-    $countAllUsers = count($allUsers);
+    
     
     //check if name contains numbers (forbidden)
     $nums = ["0","1","2","3","4","5","6","7","8","9"];
@@ -70,6 +68,26 @@ if($errorCount > 0){
         header("Location: register.php");
         die();
     }
+
+    //ensure that department does not contain invalid characters
+    //because you will use it to create filename for appointments
+    $valid = "abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $validityError = 0;
+    foreach(str_split($department) as $inp){
+        if(strpos($valid,$inp) === false){
+            $validityError++;            
+        }
+    }
+
+    if($validityError > 0){
+        $_SESSION['error'] = "You have ".$validityError . " invalid character".(($validityError >1) ? "s" : "")." in your department name submission";
+            header("Location: register.php");
+            die();
+    }
+
+    //Count all users
+    $allUsers = scandir("db/users/");
+    $countAllUsers = count($allUsers);
 
     $newUserID  = $countAllUsers-1;
 

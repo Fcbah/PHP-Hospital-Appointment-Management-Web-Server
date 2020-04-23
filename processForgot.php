@@ -40,8 +40,12 @@ if($errorCount > 0){
             TOKEN GENERATION ENDS
              */
 
+             //To ensure that the reset link is point to the right location 
+             //even though the domain name of the server is changed.
+            $server = dirname($_SERVER['HTTP_REFERER']); //dirname($_SERVER['PHP_SELF'])
+
             $subject = "Password Reset Link";
-            $message = "A password reset has been initiated from your account, if you did not initiate this reset, please ignore this message, otherwise, visit: localhost/p/start.ng/SNH/reset.php?token=".$token;
+            $message = "A password reset has been initiated from your account, if you did not initiate this reset, please ignore this message, otherwise, visit: ". $server."/reset.php?token=".$token;
             $headers = "From: no-reply@snh.org". " \r\n". "CC: fcbah1248@snh.org";
 
             file_put_contents("db/tokens/" . $email . ".json",json_encode(['token'=> $token]));

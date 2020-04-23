@@ -50,6 +50,10 @@ If you have this error then you forgot to has the `sasl_passwd`.
 Apr 20 01:23:02 hephzibah-HP15-ra0xx postfix/smtp[19624]: warning: hash:/etc/postfix/sasl_passwd is unavailable. open database /etc/postfix/sasl_passwd.db: No such file or directory
 ```
 
+A good error thread to this problem can be found at [here](https://www.linuxquestions.org/questions/linux-software-2/configuring-postfix-for-outgoing-email-659760/)
+
+`$ postconf -n`
+
 ## Now that your test mail is working 
 
 ## After you have configured your `php.ini` file. You still have errors?
@@ -77,3 +81,19 @@ $ sudo /opt/lampp/lampp restart
 You should get a 1 whenever you run the php `mail()` function
 
 ### UNCONFIRMED
+
+
+### PERSONAL HELP
+
+#### Getting the http address of the server. To be able to properly design reset email.
+
+The relevant stack overflow post is: [php get URL of current file directory](https://stackoverflow.com/questions/51789617/php-get-url-of-current-file-directory)
+
+If your link to the current url is https://localhost.com/this/is/a/url
+```PHP
+$_SERVER['DOCUMENT_ROOT']; // gives system path [/opt/lamp/htdocs/this/is/a/url]
+$_SERVER['PHP_SELF'];   // gives route of the current file [/this/is/a/url]
+dirname($_SERVER['PHP_SELF']);// gives route the current folder [/this/is/a/]
+$_SERVER['SERVER_NAME'];// gives domain name [localhost.com]
+$_SERVER['HTTP_REFERER'];// gives the correct HTTP(S) protocol and domain name [https://localhost.com]
+```

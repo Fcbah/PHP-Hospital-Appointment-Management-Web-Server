@@ -1,6 +1,6 @@
 <?php include_once('lib/header.php');
     //if token is set
-    if(!isset($_GET['token']) && !isset($_SESSION['token'])){
+    if(!isset($_SESSION["loggedIn"]) && !isset($_GET['token']) && !isset($_SESSION['token'])){
         $_SESSION["error"] = "You are not authorized to view that page";
         header("Location: login.php");
         die();
@@ -17,6 +17,7 @@
                 }
             ?>
         </p>
+        <?php if(!isset($_SESSION["loggedIn"])){?>
         <p>            
             <input type="hidden" 
             value="<?php
@@ -33,6 +34,7 @@
             ?>" 
             type="email" name= "email" placeholder="Email" required/>
         </p>
+        <?php }?>
         <p>
             <label for="">Enter New Password</label><br/>
             <input type="password" name= "password" placeholder="Password" required/>
