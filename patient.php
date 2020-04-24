@@ -8,10 +8,7 @@ if(!is_loggedIn() || !is_patient() ){
     redirect_to("dashboard.php");
 }
 ?>
- Welcome to SNH Hospital for the ignorant
-    <br/> <hr/> 
-    <p>This is a specialist hospital to cure ignorance</p>
-    <p> Come as you are it is completely free!</p>
+ Welcome to SNH Hospital for the ignorant<br/><hr/>
 <h1>Dashboard</h1>
 <p>
 <p>Welcome, <?php echo $_SESSION["fullName"]?> you are logged in</p> 

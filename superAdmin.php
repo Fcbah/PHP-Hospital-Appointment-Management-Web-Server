@@ -10,10 +10,7 @@ if(is_loggedIn() && !is_super_admin()){
 }
 ?>
 
- Welcome to SNH Hospital for the ignorant
-    <br/> <hr/> 
-    <p>This is a specialist hospital to cure ignorance</p>
-    <p> Come as you are it is completely free!</p>
+ Welcome to SNH Hospital for the ignorant<br/><hr/>
 <h1>Dashboard</h1><br/>
 <p>
     <?php 
@@ -23,14 +20,10 @@ if(is_loggedIn() && !is_super_admin()){
 <p>Welcome, <?php echo $_SESSION["fullName"]?> you are logged in</p> 
 <p> Your designation and Access Level is <?php echo $_SESSION["role"]?></p>
 <p>
-    Your department is <?php echo $_SESSION["department"]; ?>
-</p>
-<p>
-    Your Registration date was <?php $dt =$_SESSION["reg_date_time"]; echo $dt[3].":".$dt[4].":".$dt[5]." ".$dt[6]." on ".$dt[2]."/".$dt[1]."/".$dt[0]?>
-</p>
-<p>
     Your Last Login Time was <?php $dt =$_SESSION["last_login"]; echo $dt[3].":".$dt[4].":".$dt[5]." ".$dt[6]." on ".$dt[2]."/".$dt[1]."/".$dt[0]?>
 </p>
+<hr/>
+<h2>You Can Do One of the Following</h2>
 <p>
     <a href="view_all_patients.php">View All Patients</a><br/>
     <a href="view_all_staff.php">View All Staff</a>

@@ -9,10 +9,8 @@ if(!is_loggedIn() || !is_medical_team()){
     redirect_to("dashboard.php");
 }
 ?>
-   Welcome to SNH Hospital for the ignorant
-    <br/> <hr/> 
-    <p>This is a specialist hospital to cure ignorance</p>
-    <p> Come as you are it is completely free!</p>
+   Welcome to SNH Hospital for the ignorant<br/><hr/>
+    
 <h1>Dashboard</h1><br/>
 <p>Welcome, <?php echo $_SESSION["fullName"]?> you are logged in</p> 
 <p> Your designation and Access Level is <?php echo $_SESSION["role"]?></p>
@@ -25,6 +23,8 @@ if(!is_loggedIn() || !is_medical_team()){
 <p>
     Your Last Login Time was <?php $dt =$_SESSION["last_login"]; echo $dt[3].":".$dt[4].":".$dt[5]." ".$dt[6]." on ".$dt[2]."/".$dt[1]."/".$dt[0]?>
 </p>
+<hr/>
+<h2>Your Appointments</h2>
 <div class="table-container">
 <table>
 <?php
