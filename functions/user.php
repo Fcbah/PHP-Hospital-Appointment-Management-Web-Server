@@ -1,5 +1,6 @@
 <?php 
 require_once("alert.php");
+require_once("validate.php");
 
 
 //check if a provided session variable is set
@@ -71,6 +72,46 @@ function find_user($email=""){
     
     return false;
 }//end function find user
+
+function get_all_patients(){
+    $patients = [];
+    $count = 0;
+    $allUsers = scandir("db/users/");
+
+    foreach($allUsers as $user){
+        if(!length_too_short($user,5)){
+            $userString = file_get_contents("db/users/".$user );
+            $userObject = json_decode($userString);
+            $role = $userObject->designation;
+
+            if($role == "Patients"){
+                $patients[$count++] = $userObject;
+            }
+        }
+    }
+
+    return $patients;
+}
+
+function get_all_staff(){
+    $staff = [];
+    $count = 0;
+    $allUsers = scandir("db/users/");
+
+    foreach($allUsers as $user){
+        if(!length_too_short($user,5)){
+            $userString = file_get_contents("db/users/".$user );
+            $userObject = json_decode($userString);
+            $role = $userObject->designation;
+
+            if($role == "Medical Team (MT)"){
+                $staff[$count++] = $userObject;
+            }
+        }
+    }
+
+    return $staff;
+}
 
 function save_user($userObject){
     file_put_contents("db/users/".$userObject['email']. '.json', json_encode($userObject));

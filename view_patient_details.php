@@ -5,7 +5,7 @@ require_once("functions/user.php");
 require_once("functions/redirect.php");
 
 //check if get variable is set
-if(!is_get("appointment")){
+if(!is_medical_team() || !is_get("appointment")){
     redirect_to("medical.php");
 }
 $appointment = $_GET["appointment"];

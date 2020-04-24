@@ -31,4 +31,8 @@ if(is_loggedIn() && !is_super_admin()){
 <p>
     Your Last Login Time was <?php $dt =$_SESSION["last_login"]; echo $dt[3].":".$dt[4].":".$dt[5]." ".$dt[6]." on ".$dt[2]."/".$dt[1]."/".$dt[0]?>
 </p>
+<p>
+    <a href="view_all_patients.php">View All Patients</a><br/>
+    <a href="view_all_staff.php">View All Staff</a>
+</p>
 <?php include_once("lib/footer.php")?>

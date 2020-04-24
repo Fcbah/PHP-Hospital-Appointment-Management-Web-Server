@@ -40,12 +40,8 @@ if($errorCount > 0){
         $try = send_mail($email, $subject, $message);
 
         if($try){
-            // //display a success message
-            // set_alert("Password reset has been sent to your email: ". $email);
-            // redirect_to("login.php");
-
-            //temporary_success_message
-            set_alert("Password reset has been sent to your email: ". $email.' "'.$message.'" ');
+            //display a success message
+            set_alert("Password reset has been sent to your email: ". $email);
             redirect_to("login.php");
 
         }else{
