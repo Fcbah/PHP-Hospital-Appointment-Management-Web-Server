@@ -1,6 +1,14 @@
 # Configuring the mail funtion and php.ini in Ubuntu 18.04 XAMPP (LAMPP) with Post Fix
 @OluwanifemiBam Please, can you send your configuration details for postfix.
 Although I use Linux (Ubuntu), I believe the filesystem is similar.
+Installing Postfix:
+Jagit Signs page [here](https://iamjagjeetubhi.wordpress.com/2017/01/25/configure-ubuntu-server-to-use-php-mail-function-configure-postfix-to-use-gmail-smtp-on-ubuntu/)
+
+```
+$ sudo apt-get install postfix mailutils libsasl2-2 ca-certificates libsasl2-modules
+
+```
+
 For me, After installing Postfix, using information i got from googling I configured `/etc/postfix/main.cf`  by  adding these lines
 
 ```
