@@ -17,11 +17,9 @@ require_once("functions/redirect.php");
     </p>
     
     <form method="POST" action="processlogin.php">
-    <p>
-    </p>
         
         <p>
-            <label for="">Email</label><br/>
+            <label for="">Email</label>
             <input
             <?php
                 if(isset($_SESSION["email"]) && !empty($_SESSION["email"])){
@@ -30,7 +28,7 @@ require_once("functions/redirect.php");
             ?> type="email" name= "email" placeholder="Email" required/>
         </p>
         <p>
-            <label for="">Password</label><br/>
+            <label for="">Password</label>
             <input type="password" name= "password" placeholder="Password" required/>
         </p>
 

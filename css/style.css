@@ -1,0 +1,19 @@
+body{
+    background-color: #0392d4;
+}
+.container{
+    background-color: #fff;
+    margin:20px auto;
+    border-radius: 20px;
+    box-shadow: 2px 2px;
+}
+h1,h2,h3{
+    text-align: center;
+}
+label{
+    display:block;
+}
+.container{
+    min-width:400px;
+    max-width: 500px;
+}
