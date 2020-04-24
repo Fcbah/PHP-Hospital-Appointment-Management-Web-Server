@@ -43,7 +43,6 @@ if($errorCount > 0){
             //display a success message
             set_alert("Password reset has been sent to your email: ". $email);
             redirect_to("login.php");
-
         }else{
             set_alert("Something went wrong, we could not send a password reset to : ". $email, "error");
             redirect_to("login.php");
