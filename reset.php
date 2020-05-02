@@ -7,8 +7,15 @@ require_once("functions/redirect.php");
         set_alert("You are not authorized to view that page","error");
         redirect_to("login.php");
     }?>
+    
+<div class="back">
+
+<div class="div-center">
+
+<div class="content">
+
     <h1>Reset Password</h1>
-    <p>Reset Password associated with your account :[email] </p>
+    <p>Reset Password associated with your account</p>
     <form action="processreset.php" method="POST">
         <p>
             <?php
@@ -16,30 +23,33 @@ require_once("functions/redirect.php");
             ?>
         </p>
         <?php if(!is_loggedIn()){?>
-        <p>            
-            <input type="hidden" 
+        <div class="form-group">            
+            <input class="form-control" type="hidden" 
             value="<?php
             //using ternary operator to simplify things
              echo  is_session_token_set() ? $_SESSION['token']  :$_GET['token']?>" 
              name= "token" required/>
-        </p>
-        <p>
+        </div>
+        <div class="form-group">
             <label for="">Email</label><br/>
-            <input value="
+            <input class="form-control" value="
             <?php
             //using ternary operator to simplify things
             echo isset($_SESSION['email']) ? $_SESSION['email'] : ""
             ?>" 
             type="email" name= "email" placeholder="Email" required/>
-        </p>
+        </div>
         <?php }?>
-        <p>
+        <div class="form-group">
             <label for="">Enter New Password</label><br/>
-            <input type="password" name= "password" placeholder="Password" required/>
-        </p>
+            <input class="form-control" type="password" name= "password" placeholder="Password" required/>
+        </div>
         <p>
-            <button type="submit"> Reset Password</button>
+            <button class='btn btn-success' type="submit"> Reset Password</button>
         </p>
 
     </form>
+</div>
+</div>
+</div>
 <?php include_once('lib/footer.php');?>

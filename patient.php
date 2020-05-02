@@ -8,6 +8,7 @@ if(!is_loggedIn() || !is_patient() ){
     redirect_to("dashboard.php");
 }
 ?>
+<div class="container">
  Welcome to SNH Hospital for the ignorant<br/><hr/>
 <h1>Dashboard</h1>
 <p>
@@ -23,4 +24,5 @@ if(!is_loggedIn() || !is_patient() ){
 <p>
     Your Last Login Time was <?php $dt =$_SESSION["last_login"]; echo $dt[3].":".$dt[4].":".$dt[5]." ".$dt[6]." on ".$dt[2]."/".$dt[1]."/".$dt[0]?>
 </p>
+</div>
 <?php include_once("lib/footer.php")?>

@@ -9,6 +9,7 @@ if(!is_loggedIn() || !is_medical_team()){
     redirect_to("dashboard.php");
 }
 ?>
+<div class="container">
    Welcome to SNH Hospital for the ignorant<br/><hr/>
     
 <h1>Dashboard</h1><br/>
@@ -26,18 +27,21 @@ if(!is_loggedIn() || !is_medical_team()){
 <hr/>
 <h2>Your Appointments</h2>
 <div class="table-container">
-<table>
+<table class="table table-bordered table-hover table-striped">
 <?php
 $department = $_SESSION["department"];
 $all_appointments = get_all_appointments($department);
 if ($all_appointments){
     ?>
+    <thead>
     <tr>
-        <td>Date of appointment</td>
-        <td>Patient Name</td>
-        <td>Nature of Appointment</td>
-        <td>More Information</td>
+        <th>Date of appointment</th>
+        <th>Patient Name</th>
+        <th>Nature of Appointment</th>
+        <th>More Information</th>
     </tr>
+    </thead>
+    <tbody>
     <?php
     foreach($all_appointments as $appointment){
 
@@ -56,13 +60,13 @@ if ($all_appointments){
 }else{
     ?>
     <tr>
-        <p>
             YOU HAVE NO PENDING APPOINTMENTS
-        </p>
     </tr>
     <?php
 }
 ?>
+</tbody>
 </table>
+</div>
 </div>
 <?php include_once("lib/footer.php")?>

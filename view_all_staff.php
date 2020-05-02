@@ -11,17 +11,21 @@ if(!is_super_admin()){
 $allStaffs = get_all_staff();
 
 ?>
+<div class="container">
 <h1>View All Staff</h1>
 
-<table>
+<table class="table table-bordered table-hover ">
+    <thead class="thead-dark">
     <tr>
-        <td>First Name</td>
-        <td>Last Name</td>
-        <td>Email</td>
-        <td>Role</td>
-        <td>Department</td>
-        <td>Registration Date</td>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Department</th>
+        <th>Registration Date</th>
     </tr>
+    </thead>
+    <tbody>
     <?php
     foreach($allStaffs as $staff){
         ?>
@@ -36,9 +40,10 @@ $allStaffs = get_all_staff();
         <?php
     }
     ?>
+    </tbody>
 </table>
 <div>
-<a href="superAdmin.php">Return to Dashboard</a>
+<a class="btn btn-primary" href="superAdmin.php">Return to Dashboard</a>
 </div>
-
+</div>
 <?php require_once("lib/footer.php")?>

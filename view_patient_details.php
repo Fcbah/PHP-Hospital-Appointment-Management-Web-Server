@@ -14,39 +14,44 @@ $department =$_SESSION["department"];
 $appointObject = get_appointObject($department,$appointment);
 
 ?>
-<div>
-    <h2>Patient Details Page</h2>
-    <table>
+<div class="container">
+    <h2 class="text-center">Patient Details Page</h2>
+    <table class="table table-bordered table-dark table-hover table-striped">
+        <thead>
         <tr>
-            <td>Info:</td>
+            <th>Info</th>
             <td>Details</td>
         </tr>
+        </thead>
+        <tbody>        
         <tr>
-            <td>Patient Name</td>
+            <th>Patient Name</th>
             <td><?php echo  $appointObject->name?></td>
         </tr>
         <tr>
-            <td>Date of appointment</td>
+            <th>Date of appointment</th>
             <td><?php echo  $appointObject->date_appoint?></td>
         </tr>
         <tr>
-            <td>Time of appointment</td>
+            <th>Time of appointment</th>
             <td><?php echo  $appointObject->time_appoint?></td>
         </tr>
         <tr>
-            <td>Nature of Complaints</td>
+            <th>Nature of Complaints</th>
             <td><?php echo  $appointObject->nature_appoint?></td>
         </tr>
         <tr>
-            <td>Initial Complaints</td>
+            <th>Initial Complaints</th>
             <td><?php echo  $appointObject->initial_complaint?></td>
         </tr>
         <?php
         ?>
-    </table>    
+    </tbody>
+    </table>
+    <div>
+    <a class="btn btn-primary" href="medical.php">Return back to Dashboard</a>
+</div>    
 </div>
-<div>
-    <a href="medical.php">Return back to Dashboard</a>
-</div>
+
 
 <?php require_once("lib/footer.php")?>

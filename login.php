@@ -4,36 +4,47 @@ require_once('functions/alert.php');
 require_once("functions/user.php");
 require_once("functions/redirect.php");
 ?>
-    <h1>Login</h1>
-    <p>
-        <?php
-        if (is_loggedIn()){
-            redirect_to("dashboard.php");
-        }
+<?php include_once('lib/navigate2.php');?>
+<div class="back">
 
-        display_alert();  
+<div class="div-center">
 
-        ?>
-    </p>
-    
+<div class="content">    
+
     <form method="POST" action="processlogin.php">
-        
+        <h1>Login</h1>
         <p>
+            <?php
+            if (is_loggedIn()){
+                redirect_to("dashboard.php");
+            }
+
+            display_alert();  
+
+            ?>
+        </p>
+        <hr/>
+        <div class="form-group">
             <label for="">Email</label>
-            <input
+            <input class="form-control"
             <?php
                 if(isset($_SESSION["email"]) && !empty($_SESSION["email"])){
                     echo "value=".$_SESSION['email'];
                 }
             ?> type="email" name= "email" placeholder="Email" required/>
-        </p>
-        <p>
+        </div>
+        <div class="form-group">
             <label for="">Password</label>
-            <input type="password" name= "password" placeholder="Password" required/>
-        </p>
+            <input class="form-control" type="password" name= "password" placeholder="Password" required/>
+        </div>
 
-        <p>
-            <button type="submit">Login</button>
-        </p>
+        <div class="form-group">
+            <button class="btn btn-success" type="submit">Login</button>
+        </div>
     </form>
-<?php include_once('lib/footer.php');?>
+    
+    
+</div>
+</div>
+</div> 
+<?php include_once('lib/bodyend.php');?>

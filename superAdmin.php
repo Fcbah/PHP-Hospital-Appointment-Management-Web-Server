@@ -9,8 +9,8 @@ if(is_loggedIn() && !is_super_admin()){
     redirect_to("dashboard.php");
 }
 ?>
-
- Welcome to SNH Hospital for the ignorant<br/><hr/>
+<div class="container">
+ <span>Welcome to SNH Hospital for the ignorant</span><hr/>
 <h1>Dashboard</h1><br/>
 <p>
     <?php 
@@ -23,9 +23,10 @@ if(is_loggedIn() && !is_super_admin()){
     Your Last Login Time was <?php $dt =$_SESSION["last_login"]; echo $dt[3].":".$dt[4].":".$dt[5]." ".$dt[6]." on ".$dt[2]."/".$dt[1]."/".$dt[0]?>
 </p>
 <hr/>
-<h2>You Can Do One of the Following</h2>
-<p>
-    <a href="view_all_patients.php">View All Patients</a><br/>
-    <a href="view_all_staff.php">View All Staff</a>
-</p>
+<!-- <h2>You Can Do One of the Following</h2> -->
+<div>
+    <a class="btn btn-primary" href="view_all_patients.php">View All Patients</a>
+    <a class="btn btn-primary" href="view_all_staff.php">View All Staff</a>
+</div>
+</div>
 <?php include_once("lib/footer.php")?>

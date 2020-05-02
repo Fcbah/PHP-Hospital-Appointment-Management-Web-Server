@@ -10,4 +10,4 @@
     <title>StartNG Hospital</title>
 </head>
 <body>
-    <div class="container">
+    
