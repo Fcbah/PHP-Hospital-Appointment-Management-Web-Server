@@ -3,6 +3,10 @@ require_once("functions/user.php");
 require_once("functions/redirect.php");
 
 if (is_loggedIn()){
+    //session_destroy();//to fix a bug of intefering session on localhost testing
+    //session_unset();
+
+    //or to fix the bug I can rename the session variables with a prefix of fcb-loggedIn
     redirect_to("dashboard.php");
 }?>
 <div class="container">

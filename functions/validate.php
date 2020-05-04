@@ -52,5 +52,12 @@ function department_name_valid($name){
     return $validityError;
 }
 
+function is_real_directory($name){
+    if($name != "." &&  $name != "..")
+    {
+        return true;
+    }
+    return false;
+}
 
 ?>

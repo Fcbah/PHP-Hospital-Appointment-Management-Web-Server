@@ -13,6 +13,11 @@ function is_get($parameter){
     return (isset($_GET[$parameter]) && !empty($_GET[$parameter]));
 }
 
+//checks if a provide form get variable is set
+function is_post($parameter){
+    return (isset($_POST[$parameter]) && !empty($_POST[$parameter]));
+}
+
 //checks if a user is logged in
 function is_loggedIn(){
     return is_session("loggedIn");
