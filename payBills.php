@@ -1,6 +1,7 @@
 <?php include_once("lib/header.php");
 require_once("functions/user.php");
 require_once("functions/appointment.php");
+require_once("functions/transaction.php");
 
 if (is_loggedIn()){
 
@@ -9,7 +10,7 @@ if (is_loggedIn()){
 ?>
 <div class="back">
 
-<div class="div-center">
+<div class="div-center" >
 
 <div class="content">
 
@@ -18,7 +19,7 @@ if(is_post("department")){//the two things that determine the transaction-ID
 $department = $_POST['department'];
 $email = $_SESSION["email"];
 $phone_no = is_session("phone_no") ? $_SESSION['phone_no'] : "2348131391511";
-$txcount=123;
+$txcount=increment_transaction();
 $txRand = mt_rand(10000,99999);
 $txID = "Fcbah-SNGV3-". $txcount."-". $txRand ;?>
 <form>
@@ -58,11 +59,11 @@ const API_publicKey = "FLWPUBK_TEST-800704e037a885fb526d3d3cef9e39e9-X";
 function payWithRave() {
     var x = getpaidSetup({
         PBFPubKey: API_publicKey,
-        customer_email: <?php echo $email?>,
+        customer_email: "<?php echo $email?>",
         amount: parseInt(<?php echo $amount?>),
-        customer_phone: <?php echo $phone_no?>,
+        customer_phone: "<?php echo $phone_no?>",
         currency: "NGN",
-        txref: <?php echo $txID?>,
+        txref: "<?php echo $txID?>",
         meta: [{
             metaname: "flightID",
             metavalue: "AP1234"
