@@ -29,13 +29,14 @@ if ($userObject){
         $_SESSION['loggedIn'] = $userObject->id;
         $_SESSION["fullName"] = $userObject->first_name. " " . $userObject->last_name; 
         $designat = $_SESSION["role"] = $userObject->designation;
-        $userObject->{"last_login"} = explode(" ",date("Y m d h i s A"));
+        $userObject->{"last_login"} = explode(" ",date("Y m d h i s A")); //update last login
         $_SESSION["reg_date_time"] = $userObject->reg_date_time;
         $_SESSION["last_login"] = $userObject->last_login;
         $_SESSION["department"] = $userObject->department;
-        
+                
         if(is_patient()){
-            update_user($userObject);        
+            update_user($userObject);
+            $_SESSION["phone_no"] = property_exists($userObject,"phone_no") ?  $userObject->phone_no : "2348100000000";        
             redirect_to("patient.php");            
         }
         else if(is_medical_team()){

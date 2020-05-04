@@ -64,6 +64,15 @@ if (is_loggedIn() && !is_super_admin()){
             ?> type="email" name= "email" placeholder="Email" required/>
         </div>
         <div class="form-group">
+            <label for="">Phone Number</label><br/>
+            <input class="form-control"
+            <?php
+                if(isset($_SESSION["phone_no"]) && !empty($_SESSION["phone_no"])){
+                    echo "value=".$_SESSION['phone_no'];
+                }
+            ?> type="tel" name= "phone_no" placeholder="Phone Number" required/>
+        </div>
+        <div class="form-group">
             <label for="">Password</label><br/>
             <input class="form-control" type="password" name= "password" placeholder="Password" required/>
         </div>

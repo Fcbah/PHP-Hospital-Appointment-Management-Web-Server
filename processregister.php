@@ -14,6 +14,7 @@ $password = $_POST['password'] != "" ? $_POST['password'] : $errorCount++;
 $gender = $_POST['gender'] != "" ? $_POST['gender'] : $errorCount++;
 $designation = $_POST['designation'] != "" ? $_POST['designation'] : $errorCount++;
 $department = $_POST['department'] != "" ?$_POST['department'] : $errorCount++;
+$phone_no = $_POST['phone_no'] != "" ?$_POST['phone_no'] : $errorCount++;
 
 $_SESSION["first_name"] = $first_name;
 $_SESSION["last_name"] = $last_name;
@@ -22,6 +23,7 @@ $_SESSION["email"] = $email;
 $_SESSION["gender"] = $gender;
 $_SESSION["designation"] = $designation;
 $_SESSION["department"] = $department;
+$_SESSION["phone_no"] = $phone_no;
 
 
 if($errorCount > 0){
@@ -90,6 +92,7 @@ if($errorCount > 0){
         "gender" => $gender,
         "designation" => $designation,
         "department" => $department,
+        "phone_no" => $phone_no,
         "reg_date_time" => explode(" ",date("Y m d h i s A"))
     ];
     
