@@ -56,6 +56,7 @@ $allTransactions = $masterList->New_Transactions;
         <?php
     }
     ?>
+    </tbody>
     </table>
 <!-- <h2>You Can Do One of the Following</h2> -->
 <div>
