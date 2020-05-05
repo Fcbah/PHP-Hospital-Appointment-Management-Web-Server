@@ -44,6 +44,10 @@ $appointObject = get_appointObject($department,$appointment);
             <th>Initial Complaints</th>
             <td><?php echo  $appointObject->initial_complaint?></td>
         </tr>
+        <tr>
+            <th>Payment Status</th>
+            <td><?php echo  $appointObject->status?></td>
+        </tr>
         <?php
         ?>
     </tbody>
