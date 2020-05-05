@@ -143,4 +143,7 @@ function get_all_appointments($department){
 function add_appointment($department, $appointObject){
     file_put_contents("db/appoints/".$department."/" . $appointObject["email"] . ".json",json_encode($appointObject));
 }
+function update_appointment($department,$appointObject){
+    file_put_contents("db/appoints/".$department."/" . $appointObject->email . ".json",json_encode($appointObject));
+}
 ?>

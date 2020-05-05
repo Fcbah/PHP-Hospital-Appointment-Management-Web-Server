@@ -52,7 +52,7 @@ if($errorCount > 0){
         //conditional pluralization of "error"
         $error_msg = "You have ".$validityError . " invalid character".(($validityError >1) ? "s" : "")." in your department name submission";
 
-        set_alert($error_msg,"error");
+        set_alert($error_msg);
         redirect_to("bookAppointment.php");
     }
     
@@ -63,13 +63,29 @@ if($errorCount > 0){
         "email" => $email,
         "nature_appoint" => $nature_appoint,
         "initial_complaint" => $initial_complaint,
+        "status" => "unpaid",
         "reg_date_time" => explode(" ",date("Y m d h i s A"))
     ];
 
     $departmentExist = find_department($department);   
     
     if($departmentExist){
-        add_appointment($department,$appointObject);
+        $department = $departmentExist;
+        
+        $appointment = find_appointment($department,$email);
+        
+        if($appointment){
+            $appointObject = get_appointObject($department,$appointment);
+
+            $appointObject->date_appoint = $date_appoint;
+            $appointObject->time_appoint = $time_appoint;
+            $appointObject->nature_appoint = $nature_appoint;
+            $appointObject->initial_complaint = $initial_complaint;
+
+            update_appointment($department,$appointObject);
+        }else{
+            add_appointment($department,$appointObject);
+        }
     }
     else{
         mkdir("db/appoints/".$department, 0777,true);

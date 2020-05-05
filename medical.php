@@ -12,7 +12,9 @@ if(!is_loggedIn() || !is_medical_team()){
 <div class="container">
    Welcome to SNH Hospital for the ignorant<br/><hr/>
     
-<h1>Dashboard</h1><br/>
+<h1>Dashboard</h1><hr/>
+<p>
+<?php display_msg();?></p>
 <p>Welcome, <?php echo $_SESSION["fullName"]?> you are logged in</p> 
 <p> Your designation and Access Level is <?php echo $_SESSION["role"]?></p>
 <p>

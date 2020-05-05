@@ -1,12 +1,13 @@
 <?php include_once("lib/header.php");
 require_once("functions/user.php");
+require_once("functions/alert.php");
 require_once("functions/appointment.php");
 require_once("functions/transaction.php");
+require_once("functions/redirect.php");
 
-if (is_loggedIn()){
-
+if (!is_loggedIn() || !is_patient()){
+    redirect_to("index.php");
 }
-
 ?>
 <div class="back">
 
@@ -15,13 +16,16 @@ if (is_loggedIn()){
 <div class="content">
 
 <?php $amount = 2500;
-if(is_post("department")){//the two things that determine the transaction-ID 
+if(is_post("department")){
+
 $department = $_POST['department'];
 $email = $_SESSION["email"];
 $phone_no = is_session("phone_no") ? $_SESSION['phone_no'] : "2348131391511";
 $txcount=increment_transaction();
 $txRand = mt_rand(10000,99999);
-$txID = "Fcbah-SNGV3-". $txcount."-". $txRand ;?>
+$txID = "Fcbah-SNGV3-". $txcount."-". $txRand ;
+$appointobj = get_appointObject(find_department($department),find_appointment($department,$email));
+if($appointobj && appointment_unpaid($appointobj)){ ?>
 <form>
 <h1>Pay Bills</h1>
 <p>You are about to pay ₦<?php echo $amount?> for your appointment with "<?php echo $department ?>" department.</p>
@@ -29,10 +33,17 @@ $txID = "Fcbah-SNGV3-". $txcount."-". $txRand ;?>
 <button type="button" class= "btn btn-success" onClick="payWithRave()">Pay Now</button>
 </form>
 
-<?php } else {?>
+<?php }else{
+    set_alert("Appointment payment selection Invalid or Already Paid");
+    redirect_to("dashboard.php");
+}
+ } else {?>
 
     <form action="payBills.php" method="POST">
         <h1>Pay Bills</h1>
+        <p><?php //to get success message after paying bills/
+         display_msg(); ?></p>
+
         <p>You are to pay ₦<?php echo $amount?> for each appointment. But before you do that select the appointments you want to pay for</p>
         <hr/>
         <h4>Select the Appointments you want to pay for</h4>
@@ -76,11 +87,11 @@ function payWithRave() {
                 response.tx.chargeResponseCode == "00" ||
                 response.tx.chargeResponseCode == "0"            
             ) {
-                window.location.href ="processBill.php?success=true&txref="+txref+"&chargeResponseCode="+response.tx.chargeResponseCode+"&chargeResponseMessage="+response.tx.chargeResponseMessage;
+                window.location.href ="processBill.php?success=true&txref="+txref+"&chargeResponseCode="+response.tx.chargeResponseCode+"&chargeResponseMessage="+response.tx.chargeResponseMessage+"&department="+"<?php echo $department ?>"+"&amount="+"<?php echo $amount ?>";
             } else {
                 //In case the reason for failure is due to pending validations. So I delay redirect for 2 seconds.
                 setTimeout(function(){
-                window.location.href = "processBill.php?success=false&txref="+txref+"&chargeResponseCode="+response.tx.chargeResponseCode+"&chargeResponseMessage="+response.tx.chargeResponseMessage;
+                window.location.href = "processBill.php?success=false&txref="+txref+"&chargeResponseCode="+response.tx.chargeResponseCode+"&chargeResponseMessage="+response.tx.chargeResponseMessage+"&department="+"<?php echo $department ?>"+"&amount="+"<?php echo $amount ?>";
                 },1000);                               
             }
 

@@ -10,7 +10,8 @@ function display_error(){
 function display_msg(){
     if(isset($_SESSION["message"]) && !empty($_SESSION["message"])){
         echo "<span style='color:green'>". $_SESSION['message']."</span>";
-        $_SESSION["message"] = "";//so as not to destroy superAdmin session during registration
+        unset($_SESSION["message"]);//so as not to destroy superAdmin session during registration
+        unset($_SESSION["error"]);
     }
 }
 
@@ -24,7 +25,7 @@ function display_alert(){
     }
     if(isset($_SESSION["message"]) && !empty($_SESSION["message"])){
         echo "<span style='color:green'>". $_SESSION['message']."</span>";
-        $_SESSION["message"] = "";
+        unset($_SESSION["message"]);//so as not to destroy superAdmin session during registration;
     }
     if(isset($_SESSION["info"]) && !empty($_SESSION["info"])){
         echo "<span style='color:grey'>". $_SESSION['message']."</span>";

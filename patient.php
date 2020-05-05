@@ -10,11 +10,13 @@ if(!is_loggedIn() || !is_patient() ){
 ?>
 <div class="container">
  Welcome to SNH Hospital for the ignorant<br/><hr/>
-<h1>Dashboard</h1>
+<h1>Dashboard</h1><hr/>
 <p>
+<?php display_msg();?></p>
+<div>
 <p>Welcome, <?php echo $_SESSION["fullName"]?> you are logged in</p> 
 <p> Your designation and Access Level is <?php echo $_SESSION["role"]?></p>
-</p>
+</div>
 <p>
     Your department is <?php echo $_SESSION["department"]; ?>
 </p>
