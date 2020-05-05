@@ -40,6 +40,7 @@ if ($all_appointments){
         <th>Date of appointment</th>
         <th>Patient Name</th>
         <th>Nature of Appointment</th>
+        <th>Payment Status</th>
         <th>More Information</th>
     </tr>
     </thead>
@@ -55,6 +56,7 @@ if ($all_appointments){
             <td><?php echo $appointObject->date_appoint?></td>
             <td><?php echo $appointObject->name?></td>
             <td><?php echo $appointObject->nature_appoint?></td>
+            <td><?php echo $appointObject->status?></td>
             <td><a href="view_patient_details.php?appointment=<?php echo $appointment?>">More Details</a></td>
         </tr>        
         <?php
