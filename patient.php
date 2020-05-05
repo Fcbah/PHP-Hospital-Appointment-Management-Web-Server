@@ -26,5 +26,7 @@ if(!is_loggedIn() || !is_patient() ){
 <p>
     Your Last Login Time was <?php $dt =$_SESSION["last_login"]; echo $dt[3].":".$dt[4].":".$dt[5]." ".$dt[6]." on ".$dt[2]."/".$dt[1]."/".$dt[0]?>
 </p>
+<a class="btn btn-primary" href="view_transaction_history.php">View Transaction History</a>
 </div>
+
 <?php include_once("lib/footer.php")?>

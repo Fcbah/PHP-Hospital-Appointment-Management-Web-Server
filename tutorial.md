@@ -1,8 +1,7 @@
 # Configuring the mail funtion and php.ini in Ubuntu 18.04 XAMPP (LAMPP) with Post Fix
-@OluwanifemiBam Please, can you send your configuration details for postfix.
-Although I use Linux (Ubuntu), I believe the filesystem is similar.
-Installing Postfix:
-Jagit Signs page [here](https://iamjagjeetubhi.wordpress.com/2017/01/25/configure-ubuntu-server-to-use-php-mail-function-configure-postfix-to-use-gmail-smtp-on-ubuntu/)
+
+## Installing Postfix:
+Check Jagit Signs page [here](https://iamjagjeetubhi.wordpress.com/2017/01/25/configure-ubuntu-server-to-use-php-mail-function-configure-postfix-to-use-gmail-smtp-on-ubuntu/)
 
 ```
 $ sudo apt-get install postfix mailutils libsasl2-2 ca-certificates libsasl2-modules
@@ -39,13 +38,11 @@ And reloaded postfix with
 ```
 $ sudo /etc/init.d/postfix reload
 ```
-I ran this test and got nothing in my mail box
+I ran this test 
 ```
 echo "Test mail from postfix" | mail -s "Test Postfix" you@example.com
 ```
-I ran the send reset mail code and got nothing also in my mail box.
-Please I really need help, I just un-installed sendmail when it did not work.
-I want to be sure that postfix won't work before I uninstall it and try PHP Mailer & Composer.
+
 
 ## Test email not working
 
@@ -53,7 +50,7 @@ check error log at the `/var/log/` folder. You can check the `mail.log` and/or `
 ```
 gedit /var/log/mail.log
 ```
-If you have this error then you forgot to has the `sasl_passwd`.
+If you have this error then you forgot to hash the `sasl_passwd`.
 ```
 Apr 20 01:23:02 hephzibah-HP15-ra0xx postfix/smtp[19624]: warning: hash:/etc/postfix/sasl_passwd is unavailable. open database /etc/postfix/sasl_passwd.db: No such file or directory
 ```
@@ -88,7 +85,6 @@ $ sudo /opt/lampp/lampp restart
 
 You should get a 1 whenever you run the php `mail()` function
 
-### UNCONFIRMED
 
 
 ### PERSONAL HELP

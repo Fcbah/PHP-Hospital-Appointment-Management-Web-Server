@@ -23,3 +23,5 @@ In case of Ubuntu using XAMPP you can easily solve permission issues by changing
 OR if you are not worried about the security implication
 
 ```sudo chmod 777 -R <PATH TO FOLDER>```
+## Configuring Email on Linux (Ubuntu) XAMPP using Postfix
+Check this this markdown document [tutorial.md](tutorial.md)
